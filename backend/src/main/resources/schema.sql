@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS test;
+
+USE test;
+DROP TABLE IF EXISTS dummydata;
+
+CREATE TABLE IF NOT EXISTS dummydata (
+    id INT NOT NULL AUTO_INCREMENT,
+    dummyname VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+);
