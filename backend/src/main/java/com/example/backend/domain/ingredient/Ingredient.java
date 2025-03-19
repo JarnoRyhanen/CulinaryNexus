@@ -68,5 +68,4 @@ public class Ingredient {
         return "Ingredient [ingredientId=" + ingredientId + ", ingredientName=" + ingredientName + ", unit=" + unit
                 + ", recipes=" + "]";
     }
-
 }

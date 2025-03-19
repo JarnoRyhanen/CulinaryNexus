@@ -31,14 +31,12 @@ CREATE TABLE IF NOT EXISTS Recipe_type (
     PRIMARY KEY (type_id)
 );
 
-
 CREATE TABLE IF NOT EXISTS Ingredient (
     ingredient_id INT NOT NULL AUTO_INCREMENT,
     ingredient_name VARCHAR(20) NOT NULL,
     unit VARCHAR(15) NOT NULL,
     PRIMARY KEY (ingredient_id)
 );
-
 
 CREATE TABLE IF NOT EXISTS Recipe (
     recipe_id INT NOT NULL AUTO_INCREMENT,

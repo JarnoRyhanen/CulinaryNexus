@@ -13,6 +13,7 @@ import com.example.backend.domain.ingredient.Ingredient;
 import com.example.backend.domain.ingredient.IngredientRepository;
 import com.example.backend.domain.recipe.Recipe;
 import com.example.backend.domain.recipe.RecipeRepository;
+
 import com.example.backend.domain.recipe_type.RecipeType;
 import com.example.backend.domain.recipe_type.RecipeTypeRepository;
 import com.example.backend.domain.role.UserRole;
@@ -30,6 +31,7 @@ public class BackendApplication {
     @Bean
     public CommandLineRunner clr(RecipeRepository recipeRepository, RecipeTypeRepository recipeTypeRepository,
             AppUserRepository appUserRepository, UserRoleRepository userRoleRepository,
+
             IngredientRepository ingredientRepository) {
         return (args) -> {
 
@@ -49,7 +51,6 @@ public class BackendApplication {
             ingredientRepository.save(ingredient2);
             ingredientRepository.save(ingredient3);
             ingredientRepository.save(ingredient4);
-
             ingredientRepository.save(ingredient5);
 
             for (Ingredient ingredient : ingredientRepository.findAll()) {
