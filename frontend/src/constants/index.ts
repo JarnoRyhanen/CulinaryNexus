@@ -1,5 +1,7 @@
 
-
+import CYODFATU from "../assets/hero/CYODFATU.jpg";
+import EGF from "../assets/hero/EGF.jpg";
+import FTTFI from "../assets/hero/FTTFI.jpg";
 
 export const navigation = [
     {
@@ -14,19 +16,32 @@ export const navigation = [
     },
     {
         id: "2",
-        title: "How to use",
-        url: "#how-to-use",
-    },
-    {
-        id: "3",
         title: "New account",
         url: "#signup",
         onlyMobile: true,
     },
     {
-        id: "4",
+        id: "3",
         title: "Sign in",
         url: "#login",
         onlyMobile: true,
     },
 ];
+
+export const features = [
+    {
+        id: "1",
+        title: "Create your own dished for anyone to use!",
+        imageUrl: CYODFATU,
+    },
+    {
+        id: "2",
+        title: "Find the tastiest foods imaginable!",
+        imageUrl: FTTFI,
+    },
+    {
+        id: "3",
+        title: "Explore global flavors!",
+        imageUrl: EGF,
+    },
+]

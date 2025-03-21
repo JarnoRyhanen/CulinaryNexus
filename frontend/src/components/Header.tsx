@@ -3,7 +3,7 @@ import logo from '../assets/logo.png';
 import { useLocation } from 'react-router-dom';
 import { disablePageScroll, enablePageScroll } from "scroll-lock";
 import { navigation } from '../constants';
-import { HambugerMenu } from './design/header';
+import { HambugerMenu } from './design/Header';
 import MenuSvg from '../assets/MenuSvg';
 import Button from './Button';
 
@@ -31,16 +31,16 @@ const Header = () => {
     };
 
     return (
-        <div className={`fixed top-0 left-0 w-full z-50 border-b lg:backdrop-blur-sm 
-          ${openNavigation ? 'bg-n-8' : 'bg-n-8/90 backdrop-blur-sm'}`}>
-            <div className='flex items-center justify-between p-4 px-10 bg-green-600'>
+        <div className={`fixed top-0 left-0 w-full z-50 lg:backdrop-blur-sm shadow-xl 
+          ${openNavigation ? 'bg-black' : 'bg-black/90 backdrop-blur-sm'}`}>
+            <div className=' flex items-center justify-between p-4 px-10 bg-green-600'>
                 <a className="flex items-center justify-start gap-4" href="#hero">
                     <img src={logo} width={52} height={52} alt="culinary nexus" />
                     <h2 className='text-xl '>CulinaryNexus</h2>
                 </a>
 
                 <nav className={` ${openNavigation ? 'flex' : 'hidden'} 
-                fixed top-[6rem] left-0 right-0 bottom-0 bg-n-8 
+                fixed top-[5.9rem] left-0 right-0 bottom-0 bg-black text-white
                 lg:static lg:flex lg:mx-auto lg:bg-transparent`}>
 
                     <div className="relative z-2 flex flex-col 
