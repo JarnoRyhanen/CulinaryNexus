@@ -2,6 +2,8 @@ import { useState } from "react";
 import herobanner from "../assets/herobanner.jpg";
 import logo from "../assets/logo.png";
 import Button from './Button';
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
 
@@ -10,9 +12,39 @@ const SignIn = () => {
     email: "",
     password: ""
   });
+  const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [event.target.name]: event.target.value })
+  }
+
+  const handleSignUp = async () => {
+    try {
+      if (!user.username || !user.email || !user.password) {
+        setError("Please fill in all fields.");
+        return;
+      }
+
+      const response = await axios.post("http://localhost:8080/user", {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      });
+      
+      console.log(response.data);
+      navigate("/home");
+
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Signup failed: ", error.response ? error.response.data : error.message);
+        setError(error.response ? error.response.data : error.message);
+      } else {
+        console.error("Signup failed: ", error);
+        setError(error as string);
+      }
+    }
   }
 
   return (
@@ -25,10 +57,7 @@ const SignIn = () => {
       />
 
       <div className='absolute md:-top-32 inset-0 flex items-center justify-center z-10'>
-        <div className='opacity-[97%] p-4 bg-white rounded-2xl
-
-        w-[16rem] h-[25rem]
-        
+        <div className='opacity-[97%] p-4 bg-white rounded-2xl        
         md:w-8/12 md:h-[70%] 2xl:w-8/12 2xl:h-[70%]
         
         flex justify-center border-2 border-black/75'>
@@ -39,6 +68,7 @@ const SignIn = () => {
               <h1 className='m-auto pl-4 font-bold font-sans text-xs md:text-3xl text-orange-900 md:w-[30rem]'>Sign in to join CulinaryNexus</h1>
             </div>
 
+              {error && <p className="text-red-500 p-1 -mb-12 font-sans font-semibold items-center">{error}</p>}
             <div className='flex flex-col pb-1 md:pb-4 gap-4 items-center md:items-start md:w-full border-b-2 border-black'>
 
               <input
@@ -72,7 +102,7 @@ const SignIn = () => {
               />
 
             </div>
-            <Button className="mt-3 md:mt-6" href="/home">
+            <Button className="mt-3 md:mt-6" onClick={handleSignUp}>
               Sign in!
             </Button>
           </div>
