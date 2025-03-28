@@ -9,7 +9,7 @@ type User = {
 const Dummydata = () => {
     const [users, setUsers] = useState<User[]>([]);
     useEffect(() => {
-        fetch('http://localhost:8080/api')
+        fetch('http://localhost:8080/users')
             .then(response => response.json())
             .then(data => setUsers(data))
             .catch(error => console.error('Error fetching users:', error));
@@ -24,6 +24,7 @@ const Dummydata = () => {
                     w-[16rem]  border border-black'>
                         <h1 className="text-3xl font-bold">
                             {user.name}
+                            {}
                         </h1>
                         {user.id}
                         <p>

@@ -1,0 +1,85 @@
+import { useState } from "react";
+import herobanner from "../assets/herobanner.jpg";
+import logo from "../assets/logo.png";
+import Button from './Button';
+
+const SignIn = () => {
+
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUser({ ...user, [event.target.name]: event.target.value })
+  }
+
+  return (
+    <div className='relative'>
+      <img src={herobanner}
+        width={screen.width}
+        height={screen.height}
+        alt='background'
+        className='rounded-b-2xl object-cover h-[50rem] md:h-[60rem] md:object-cover  z-1'
+      />
+
+      <div className='absolute md:-top-32 inset-0 flex items-center justify-center z-10'>
+        <div className='opacity-[97%] p-4 bg-white rounded-2xl
+
+        w-[16rem] h-[25rem]
+        
+        md:w-8/12 md:h-[70%] 2xl:w-8/12 2xl:h-[70%]
+        
+        flex justify-center border-2 border-black/75'>
+
+          <div className="flex flex-col items-center">
+            <div className='flex flex-col pb-4 gap-4 items-center md:w-full border-b-2 border-black'>
+              <img src={logo} alt='logo' className="w-[2.5rem] h-[2.5rem] md:w-[10rem] md:h-[10rem]" />
+              <h1 className='m-auto pl-4 font-bold font-sans text-xs md:text-3xl text-orange-900 md:w-[30rem]'>Sign in to join CulinaryNexus</h1>
+            </div>
+
+            <div className='flex flex-col pb-1 md:pb-4 gap-4 items-center md:items-start md:w-full border-b-2 border-black'>
+
+              <input
+                type='text'
+                placeholder='Username'
+                name="username"
+                onChange={handleChange}
+                value={user.username}
+                className='relative mt-6 md:mt-16 font-medium font-sans text-black placeholder:text-black/50 bg-transparent/5 
+                  border-2 text-xs md:text-2xl w-[10rem] md:w-[30rem] p-2 rounded'
+              />
+
+              <input
+                type='email'
+                placeholder='Email'
+                name="email"
+                onChange={handleChange}
+                value={user.email}
+                className='relative mt-6 md:mt-16 font-medium font-sans text-black placeholder:text-black/50 bg-transparent/5 
+                  border-2 text-xs md:text-2xl w-[10rem] md:w-[30rem] p-2 rounded'
+              />
+
+              <input
+                type='password'
+                placeholder='password'
+                name="password"
+                value={user.password}
+                onChange={handleChange}
+                className='relative mt-6 md:mt-16 font-medium font-sans text-black placeholder:text-black/50 bg-transparent/5 
+                  border-2 text-xs md:text-2xl w-[10rem] md:w-[30rem] p-2 rounded'
+              />
+
+            </div>
+            <Button className="mt-3 md:mt-6" href="/home">
+              Sign in!
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default SignIn;

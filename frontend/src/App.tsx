@@ -1,15 +1,15 @@
+import { Outlet } from 'react-router-dom'
 import './App.css'
 import ButtonGradient from './assets/ButtonGradient'
-import Header from './components/Header'
-import Hero from './components/Hero'
 
-function App() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function App({ children }: any) {
 
   return (
     <>
-      <div className='pt-[4.75rem] lg:pt-[6.5rem] overflow-hidden'>
-        <Header />
-        <Hero />
+      <div className='overflow-hidden'>
+        {children}
+        <Outlet />
       </div>
       <ButtonGradient />
     </>

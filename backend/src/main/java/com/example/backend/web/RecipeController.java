@@ -49,7 +49,6 @@ public class RecipeController {
         return (List<Ingredient>) ingredientRepository.findAll();
     }
 
-
     @CrossOrigin
     @GetMapping("/message")
     public String getMessage() {

@@ -36,7 +36,7 @@ const Header = () => {
             <div className=' flex items-center justify-between p-4 px-10 bg-green-600'>
                 <a className="flex items-center justify-start gap-4" href="#hero">
                     <img src={logo} width={52} height={52} alt="culinary nexus" />
-                    <h2 className='text-xl '>CulinaryNexus</h2>
+                    <h2 className='text-xl text-white'>CulinaryNexus</h2>
                 </a>
 
                 <nav className={` ${openNavigation ? 'flex' : 'hidden'} 
@@ -60,7 +60,7 @@ const Header = () => {
                     <HambugerMenu />
                 </nav>
 
-                <a href='#signup' className='button hidden mr-8 text-black/1050 transition-colors hover:text-gray-500 lg:block'>
+                <a href='/signup' className='button hidden mr-8 text-black/1050 transition-colors hover:text-gray-500 lg:block'>
                     New Account
                 </a>
                 <Button className="hidden lg:flex" href="login">
