@@ -27,7 +27,7 @@ const SignIn = () => {
         return;
       }
 
-      const response = await axios.post("http://localhost:8080/user", {
+      const response = await axios.post("http://localhost:8080/signin", {
         username: user.username,
         email: user.email,
         password: user.password,

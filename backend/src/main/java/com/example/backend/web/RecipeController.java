@@ -43,11 +43,19 @@ public class RecipeController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @CrossOrigin(origins = "http://localhost:5173")
-    @PostMapping("/user")
+    @PostMapping("/signin")
     public AppUser addUser(@RequestBody AppUser user) {
+        System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+        System.out.println(user.getPassword());
+        System.out.println(user.getUsername());
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty");
+        }
+
         UserRole userRole = userRoleRepository.findRoleByRoleId(3L);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUserRole(userRole);
+        System.out.println(user.toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return appUserRepository.save(user);
     }
 

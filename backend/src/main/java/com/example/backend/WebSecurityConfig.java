@@ -37,11 +37,11 @@ public class WebSecurityConfig {
             http
                     .csrf(csrf -> csrf.disable())
                             .authorizeHttpRequests(authorize -> authorize
-                                    .requestMatchers("/user", "/").permitAll() // Allow public access
+                                    .requestMatchers("/signin", "/").permitAll() // Allow public access
                                     .anyRequest().authenticated())
                             .formLogin(formlogin -> formlogin
                                     .loginPage("http://localhost:5173/signup")
-                                    .defaultSuccessUrl("/http://localhost:5173/home", true)
+                                    .defaultSuccessUrl("/message", true)
                                     .permitAll())
                             .logout(logout -> logout
                                     .permitAll());

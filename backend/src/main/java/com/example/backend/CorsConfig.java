@@ -12,7 +12,7 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:5173/"); // Allow requests from the frontend
+        config.addAllowedOrigin("http://localhost:5173"); // Allow requests from the frontend
         config.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
         config.addAllowedHeader("*"); // Allow all headers
         config.setAllowCredentials(true); // Allow cookies and credentials

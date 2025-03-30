@@ -96,9 +96,4 @@ public class AppUser {
         return "AppUser [userId=" + userId + ", username=" + username + ", email=" + email + ", userRole=" + userRole.getRoleType()
                 + ", password=" + password + "]";
     }
-
-
-
-    // Constructors, getters, setters...
-
 }

@@ -33,7 +33,10 @@ public class BackendApplication {
             AppUserRepository appUserRepository, UserRoleRepository userRoleRepository,
 
             IngredientRepository ingredientRepository) {
-        return (args) -> {
+                    return (args) -> {
+                for (UserRole userRole : userRoleRepository.findAll()) {
+                        System.out.println(userRole.toString());
+                }
                 
                 /*
             recipeRepository.deleteAll();
@@ -64,9 +67,6 @@ public class BackendApplication {
         userRoleRepository.save(user);
         userRoleRepository.save(admin);
         
-        for (UserRole userRole : userRoleRepository.findAll()) {
-                System.out.println(userRole.toString());
-        }
 
         AppUser appUser1 = new AppUser("Jarno", "Jarno.ryhanen@haaga-helia.fi",
         admin, "password");
@@ -85,30 +85,27 @@ public class BackendApplication {
         appUserRepository.save(appUser4);
         appUserRepository.save(appUser5);
         
-        for (AppUser appUser : appUserRepository.findAll()) {
-                System.out.println(appUser.toString());
-        }
         
         RecipeType recipeType1 = new RecipeType("egg dish");
         RecipeType recipeType2 = new RecipeType("soup");
         RecipeType recipeType3 = new RecipeType("breakfast");
         RecipeType recipeType4 = new RecipeType("noodles");
         
-            recipeTypeRepository.save(recipeType1);
-            recipeTypeRepository.save(recipeType2);
-            recipeTypeRepository.save(recipeType3);
-            recipeTypeRepository.save(recipeType4);
-            
-            for (RecipeType recipeType : recipeTypeRepository.findAll()) {
+        recipeTypeRepository.save(recipeType1);
+        recipeTypeRepository.save(recipeType2);
+        recipeTypeRepository.save(recipeType3);
+        recipeTypeRepository.save(recipeType4);
+        
+        for (RecipeType recipeType : recipeTypeRepository.findAll()) {
                 System.out.println(recipeType.toString());
-        }
-        
-        AppUser eggCreator = appUserRepository.findByUsername("Jarno");
-        List<Ingredient> eggDish = new ArrayList<>(Arrays.asList(ingredient1, ingredient5));
-        
-        Recipe recipe1 = new Recipe("Eggs benedict",
-        "https://example.com/eggs_benedict.jpg",
-        "Delicious egg dish",
+                }
+                
+                AppUser eggCreator = appUserRepository.findByUsername("Jarno");
+                List<Ingredient> eggDish = new ArrayList<>(Arrays.asList(ingredient1, ingredient5));
+                
+                Recipe recipe1 = new Recipe("Eggs benedict",
+                "https://example.com/eggs_benedict.jpg",
+                "Delicious egg dish",
         0,
         "This is how you make this dish",
         recipeType1,
@@ -145,8 +142,12 @@ public class BackendApplication {
                 
                 for (Recipe recipe : recipeRepository.findAll()) {
                         System.out.println(recipe.toString());
-                }
-                */
-        };
-    }
+                        }
+                        */
+                        
+                        for (AppUser appUser : appUserRepository.findAll()) {
+                                System.out.println(appUser.toString());
+                        }
+                };
+        }
 }
