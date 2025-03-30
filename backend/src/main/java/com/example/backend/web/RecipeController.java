@@ -20,8 +20,12 @@ import com.example.backend.domain.role.UserRole;
 import com.example.backend.domain.role.UserRoleRepository;
 import com.example.backend.domain.user.AppUser;
 import com.example.backend.domain.user.AppUserRepository;
+import com.example.backend.services.UserService;
+
+import jakarta.security.auth.message.AuthException;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping
@@ -30,45 +34,15 @@ public class RecipeController {
     @Autowired
     private RecipeRepository recipeRepository;
 
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
-    @Autowired
-    private AppUserRepository appUserRepository;
 
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @CrossOrigin(origins = "http://localhost:5173")
-    @PostMapping("/signin")
-    public AppUser addUser(@RequestBody AppUser user) {
-        System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-        System.out.println(user.getPassword());
-        System.out.println(user.getUsername());
-        if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            throw new IllegalArgumentException("Password cannot be null or empty");
-        }
-
-        UserRole userRole = userRoleRepository.findRoleByRoleId(3L);
-        user.setUserRole(userRole);
-        System.out.println(user.toString());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return appUserRepository.save(user);
-    }
-
+    
     @CrossOrigin
     @RequestMapping(value = "/recipes", method = RequestMethod.GET)
     public @ResponseBody List<Recipe> getRecipes() {
         return (List<Recipe>) recipeRepository.findAll();
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public @ResponseBody List<AppUser> getUsers() {
-        return (List<AppUser>) appUserRepository.findAll();
     }
 
     @CrossOrigin

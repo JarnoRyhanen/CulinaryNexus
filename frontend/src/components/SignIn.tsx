@@ -32,7 +32,10 @@ const SignIn = () => {
         email: user.email,
         password: user.password,
       });
-      
+
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("email", user.email);
+
       console.log(response.data);
       navigate("/home");
 
@@ -68,7 +71,7 @@ const SignIn = () => {
               <h1 className='m-auto pl-4 font-bold font-sans text-xs md:text-3xl text-orange-900 md:w-[30rem]'>Sign in to join CulinaryNexus</h1>
             </div>
 
-              {error && <p className="text-red-500 p-1 -mb-12 font-sans font-semibold items-center">{error}</p>}
+            {error && <p className="text-red-500 p-1 -mb-12 font-sans font-semibold items-center">{error}</p>}
             <div className='flex flex-col pb-1 md:pb-4 gap-4 items-center md:items-start md:w-full border-b-2 border-black'>
 
               <input

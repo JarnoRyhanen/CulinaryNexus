@@ -23,10 +23,11 @@ const Login = () => {
             username: user.username,
             password: user.password
           });
-          console.log(user);
           console.log("JWT Token:", response.data);
           // Save the token in localStorage or a cookie
           localStorage.setItem("token", response.data);
+          localStorage.setItem("username", response.data.username);
+          localStorage.setItem("email", response.data.email);
           navigate("/home");
         } catch (error) {
           if (axios.isAxiosError(error) && error.response) {
