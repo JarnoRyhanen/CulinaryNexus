@@ -3,7 +3,9 @@ package com.example.backend.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,10 +75,20 @@ public class UserController {
     }
 
     @CrossOrigin
+    @PostMapping(value = "/current-user")
+    public @ResponseBody AppUser getCurrentUser(@RequestBody AppUser user) {
+        
+        Long id = appUserRepository.findByUsername(user.getUsername()).getUserId();
+
+        return userService.getUserById(id);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @PreAuthorize("isAuthenticated()") // Allow only authenticated users
     public @ResponseBody List<AppUser> getUsers() {
         
-        return (List<AppUser>) appUserRepository.findAll();
+        return userService.getAllUsers();
     }
 
 }

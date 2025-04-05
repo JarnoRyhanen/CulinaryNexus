@@ -22,8 +22,12 @@ const Home = () => {
                 'Content-Type': 'application/json'
             }
         })
-            .then(response => response.json())
-            .then(data => setUsers(data))
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            }).then(data => setUsers(data))
             .catch(error => console.error('Error fetching users:', error));
     }, []);
 

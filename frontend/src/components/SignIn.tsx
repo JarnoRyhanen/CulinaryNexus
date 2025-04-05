@@ -2,7 +2,6 @@ import { useState } from "react";
 import herobanner from "../assets/herobanner.jpg";
 import logo from "../assets/logo.png";
 import Button from './Button';
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
@@ -27,26 +26,25 @@ const SignIn = () => {
         return;
       }
 
-      const response = await axios.post("http://localhost:8080/signin", {
-        username: user.username,
-        email: user.email,
-        password: user.password,
+      const response = await fetch("http://localhost:8080/signin", {
+        method: "POST",
+        headers: {
+          username: user.username,
+          email: user.email,
+          password: user.password,
+        }
       });
 
       localStorage.setItem("username", user.username);
       localStorage.setItem("email", user.email);
 
-      console.log(response.data);
+      console.log(response.json);
       navigate("/home");
 
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Signup failed: ", error.response ? error.response.data : error.message);
-        setError(error.response ? error.response.data : error.message);
-      } else {
         console.error("Signup failed: ", error);
         setError(error as string);
-      }
+      
     }
   }
 
