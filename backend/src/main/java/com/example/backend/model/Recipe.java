@@ -1,8 +1,4 @@
-package com.example.backend.domain.recipe;
-
-import com.example.backend.domain.ingredient.Ingredient;
-import com.example.backend.domain.recipe_type.RecipeType;
-import com.example.backend.domain.user.AppUser;
+package com.example.backend.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

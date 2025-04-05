@@ -5,9 +5,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.domain.role.UserRoleRepository;
-import com.example.backend.domain.user.AppUser;
-import com.example.backend.domain.user.AppUserRepository;
+import com.example.backend.model.AppUser;
+import com.example.backend.repositories.AppUserRepository;
+import com.example.backend.repositories.UserRoleRepository;
 
 import java.util.List;
 

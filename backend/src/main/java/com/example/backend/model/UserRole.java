@@ -1,8 +1,7 @@
-package com.example.backend.domain.role;
+package com.example.backend.model;
 
 import java.util.List;
 
-import com.example.backend.domain.user.AppUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;

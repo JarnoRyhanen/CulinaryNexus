@@ -9,17 +9,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.example.backend.domain.ingredient.Ingredient;
-import com.example.backend.domain.ingredient.IngredientRepository;
-import com.example.backend.domain.recipe.Recipe;
-import com.example.backend.domain.recipe.RecipeRepository;
-
-import com.example.backend.domain.recipe_type.RecipeType;
-import com.example.backend.domain.recipe_type.RecipeTypeRepository;
-import com.example.backend.domain.role.UserRole;
-import com.example.backend.domain.role.UserRoleRepository;
-import com.example.backend.domain.user.AppUser;
-import com.example.backend.domain.user.AppUserRepository;
+import com.example.backend.model.AppUser;
+import com.example.backend.model.Ingredient;
+import com.example.backend.model.Recipe;
+import com.example.backend.model.RecipeType;
+import com.example.backend.model.UserRole;
+import com.example.backend.repositories.AppUserRepository;
+import com.example.backend.repositories.IngredientRepository;
+import com.example.backend.repositories.RecipeRepository;
+import com.example.backend.repositories.RecipeTypeRepository;
+import com.example.backend.repositories.UserRoleRepository;
 
 @SpringBootApplication
 public class BackendApplication {

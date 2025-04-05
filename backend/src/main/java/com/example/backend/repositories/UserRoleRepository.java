@@ -1,7 +1,9 @@
-package com.example.backend.domain.role;
+package com.example.backend.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+
+import com.example.backend.model.UserRole;
 
 import java.util.List;
 

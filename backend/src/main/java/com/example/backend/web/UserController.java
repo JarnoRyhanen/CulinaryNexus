@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.domain.user.AppUser;
-import com.example.backend.domain.user.AppUserRepository;
+import com.example.backend.model.AppUser;
+import com.example.backend.repositories.AppUserRepository;
 import com.example.backend.services.UserService;
 
 import jakarta.security.auth.message.AuthException;
@@ -62,7 +62,7 @@ public class UserController {
             throw new AuthException("USER DOES NOT EXIST IN DB");
         }
 
-        System.out.println("USER " + userInDb + " IS FOUND");
+        System.out.println("USER " + userInDb.getUsername() + " IS FOUND");
 
         /* if (userService.getHashedPassword(user.getPassword()) != userInDb.getPassword()) {
             System.out.println(userService.getHashedPassword(user.getPassword()));
