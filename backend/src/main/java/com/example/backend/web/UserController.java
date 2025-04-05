@@ -40,10 +40,6 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/signin")
     public AppUser addUser(@RequestBody AppUser user) {
-        System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-        System.out.println(user.getPassword());
-        System.out.println(user.getUsername());
-
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
@@ -65,6 +61,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication error: " + e.getMessage());
         }
     }
+
 
     @CrossOrigin
     @PostMapping(value = "/current-user")

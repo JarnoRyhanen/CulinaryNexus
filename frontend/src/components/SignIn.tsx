@@ -3,6 +3,7 @@ import herobanner from "../assets/herobanner.jpg";
 import logo from "../assets/logo.png";
 import Button from './Button';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 const SignIn = () => {
 
@@ -14,6 +15,7 @@ const SignIn = () => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
+  const authContext = useAuth();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [event.target.name]: event.target.value })
@@ -38,16 +40,17 @@ const SignIn = () => {
         }),
       });
 
-      localStorage.setItem("username", user.username);
-      localStorage.setItem("email", user.email);
-
       console.log(response.json);
-      navigate("/home");
 
-    } catch (error) {
-        console.error("Signup failed: ", error);
-        setError(error as string);
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("password", user.password);
+      authContext?.login();
+      navigate("/home");
       
+    } catch (error) {
+      console.error("Signup failed: ", error);
+      setError(error as string);
+
     }
   }
 

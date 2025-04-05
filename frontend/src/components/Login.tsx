@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
+import { useAuth } from './AuthContext';
 
 const Login = () => {
 
@@ -15,6 +16,8 @@ const Login = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [event.target.name]: event.target.value })
   }
+
+  const authContext = useAuth();
 
   const handleLogin = async () => {
     try {
@@ -35,7 +38,11 @@ const Login = () => {
 
       localStorage.setItem("username", user.username);
       localStorage.setItem("password", user.password);
+      
+      authContext?.login();
+
       navigate("/home");
+
     } catch (error) {
       console.error("Login failed:", error instanceof Error ? error.message : error);
       alert("Login failed. Please check your credentials and try again.");

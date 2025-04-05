@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useAuth } from './AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
 
@@ -8,10 +10,11 @@ const Home = () => {
         email: string;
     }
     const [users, setUsers] = useState<User[]>([]);
-
-
     const username: string | null = localStorage.getItem("username");
     const password: string | null = localStorage.getItem("password");
+    const navigate = useNavigate();
+    const authContext = useAuth();
+
 
     useEffect(() => {
 
@@ -30,6 +33,12 @@ const Home = () => {
             }).then(data => setUsers(data))
             .catch(error => console.error('Error fetching users:', error));
     }, []);
+
+
+    const handleLogout = () => {
+        authContext?.logout();
+        navigate("/");
+    }
 
     return (
 
@@ -53,6 +62,7 @@ const Home = () => {
                     </div>
                 ))}
             </div>
+            <button onClick={handleLogout}>LOGOUT</button>
         </div>
     )
 }
