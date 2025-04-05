@@ -36,12 +36,11 @@ const Login = () => {
         throw new Error(`Login failed! Status: ${response.status}`);
       }
 
-      localStorage.setItem("username", user.username);
-      localStorage.setItem("password", user.password);
-      
-      authContext?.login();
-
-      navigate("/home");
+      response.json().then((promise) => {
+        localStorage.setItem("token", promise.token)
+        authContext?.login();
+        navigate("/home");
+      })
 
     } catch (error) {
       console.error("Login failed:", error instanceof Error ? error.message : error);

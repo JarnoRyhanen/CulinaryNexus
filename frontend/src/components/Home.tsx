@@ -10,23 +10,21 @@ const Home = () => {
         email: string;
     }
     const [users, setUsers] = useState<User[]>([]);
-    const username: string | null = localStorage.getItem("username");
-    const password: string | null = localStorage.getItem("password");
+    const token = localStorage.getItem("token");
     const navigate = useNavigate();
     const authContext = useAuth();
 
 
     useEffect(() => {
-
         fetch('http://localhost:8080/users', {
             headers: {
-                'Authorization': username && password ? 'Basic ' + btoa(`${username}:${password}`) : '',
+                'Authorization': token ? `Bearer ${token}` : "",
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }
         })
             .then(response => {
-                if (!response.ok) {
+                if (!response.ok) {                    
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
@@ -47,6 +45,7 @@ const Home = () => {
             <p>Welcome, {localStorage.getItem("username")} from localstorage</p>
             <p>Your email: {localStorage.getItem("email")}</p>
             <p>Your password: {localStorage.getItem("password")}</p>
+            <button onClick={handleLogout}>LOGOUT</button>
             <div className="flex justify-stretch mx-8 p-2 flex-wrap">
                 {users.map(user => (
                     <div key={user.id} className='p-2 m-4 gap-1 flex flex-col 
@@ -62,7 +61,6 @@ const Home = () => {
                     </div>
                 ))}
             </div>
-            <button onClick={handleLogout}>LOGOUT</button>
         </div>
     )
 }

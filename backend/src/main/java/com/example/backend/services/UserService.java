@@ -64,13 +64,12 @@ public class UserService {
     public boolean authenticate(String username, String password) {
         AppUser user = userRepository.findByUsername(username);
 
-        if (!user.getUsername().equals(username)) {
+        if (user == null) {
             throw new UsernameNotFoundException("User does not exist in the database");
         }
-        
+
         if (!passwordEncoder.matches(password, user.getPasswordHash())) {
-            System.out.println("IN PASSWORD CHECK");
-            throw  new BadCredentialsException("The password is incorrect");
+            throw new BadCredentialsException("The password is incorrect");
         }
 
         return true;

@@ -1,15 +1,16 @@
 package com.example.backend.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,21 +19,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.AppUser;
 import com.example.backend.model.LoginRequest;
 import com.example.backend.repositories.AppUserRepository;
+import com.example.backend.security.JWTGenerator;
 import com.example.backend.services.UserService;
 
-import jakarta.security.auth.message.AuthException;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private JWTGenerator jwtGenerator;
 
     @Autowired
     private AppUserRepository appUserRepository;
@@ -48,20 +48,25 @@ public class UserController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity<String> loginAppUser(@RequestBody LoginRequest loginRequest, HttpSession session) {
+    public ResponseEntity<Map<String, String>> loginAppUser(@RequestBody LoginRequest loginRequest,
+            HttpSession session) {
         try {
             boolean isAuthenticated = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
             if (isAuthenticated) {
-                session.setAttribute("user", loginRequest.getUsername());
-                return ResponseEntity.ok().body("");
+                String token = jwtGenerator.generateToken(loginRequest.getUsername());
+                Map<String, String> response = new HashMap<>();
+                response.put("token", token);
+                response.put("message", "Login was successful");
+                return ResponseEntity.ok(response);
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Invalid username or password"));
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Authentication error: " + e.getMessage()));
         }
     }
-
 
     @CrossOrigin
     @PostMapping(value = "/current-user")
@@ -74,8 +79,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    @PreAuthorize("isAuthenticated()") // Allow only authenticated users
-    public @ResponseBody List<AppUser> getUsers() {
+    public @ResponseBody List<AppUser> getUsers(@RequestHeader("Authorization") String authHeader) {
         return userService.getAllUsers();
     }
 
