@@ -40,13 +40,12 @@ const SignIn = () => {
         }),
       });
 
-      console.log(response.json);
+      response.json().then((promise) => {
+        localStorage.setItem("token", promise.token)
+        authContext?.login();
+        navigate("/home");
+      });
 
-      localStorage.setItem("username", user.username);
-      localStorage.setItem("password", user.password);
-      authContext?.login();
-      navigate("/home");
-      
     } catch (error) {
       console.error("Signup failed: ", error);
       setError(error as string);

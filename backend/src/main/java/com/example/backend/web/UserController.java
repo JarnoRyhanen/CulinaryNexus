@@ -39,11 +39,16 @@ public class UserController {
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/signin")
-    public AppUser addUser(@RequestBody AppUser user) {
+    public ResponseEntity<Map<String, String>> createUser(@RequestBody AppUser user) {
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
-        return userService.createUser(user);
+        String token = jwtGenerator.generateToken(user.getUsername());
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("message", "Sign in was successful");
+        userService.createUser(user);
+        return ResponseEntity.ok(response);
     }
 
     @CrossOrigin
