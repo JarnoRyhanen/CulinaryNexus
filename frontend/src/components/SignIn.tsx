@@ -29,10 +29,13 @@ const SignIn = () => {
       const response = await fetch("http://localhost:8080/signin", {
         method: "POST",
         headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           username: user.username,
-          email: user.email,
           password: user.password,
-        }
+          email: user.email,
+        }),
       });
 
       localStorage.setItem("username", user.username);

@@ -30,17 +30,11 @@ const Login = () => {
       });
 
       if (!response.ok) {
-        // Handle non-2xx HTTP responses
         throw new Error(`Login failed! Status: ${response.status}`);
       }
 
-      const data = await response.json();
-      console.log(data);
-
-      localStorage.setItem("username", data.username);
-      localStorage.setItem("email", data.email);
-
-      // Navigate to the home page
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("password", user.password);
       navigate("/home");
     } catch (error) {
       console.error("Login failed:", error instanceof Error ? error.message : error);

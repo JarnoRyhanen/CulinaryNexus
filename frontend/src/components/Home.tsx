@@ -17,7 +17,7 @@ const Home = () => {
 
         fetch('http://localhost:8080/users', {
             headers: {
-                'Authorization': username && password ? 'Basic ' + btoa("kuusi" + ":" + "0000") : '',
+                'Authorization': username && password ? 'Basic ' + btoa(`${username}:${password}`) : '',
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             }

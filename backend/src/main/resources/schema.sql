@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS App_user (
     username VARCHAR(40) NOT NULL UNIQUE,
     user_email VARCHAR(50) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
+    user_password_hash VARCHAR(255),
     user_role INT NOT NULL,
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_role) REFERENCES User_role(role_id)

@@ -3,6 +3,8 @@ package com.example.backend.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.model.AppUser;
+import com.example.backend.model.LoginRequest;
 import com.example.backend.repositories.AppUserRepository;
 import com.example.backend.services.UserService;
 
 import jakarta.security.auth.message.AuthException;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping
 public class UserController {
-
 
     private UserService userService;
 
@@ -30,7 +33,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    
+
     @Autowired
     private AppUserRepository appUserRepository;
 
@@ -44,40 +47,29 @@ public class UserController {
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
-
         return userService.createUser(user);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin
     @PostMapping("/login")
-    public AppUser loginUser(@RequestBody AppUser user) throws AuthException {
-        System.out.println("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-        System.out.println(user.getPassword());
-        System.out.println(user.getUsername());
-
-        AppUser userInDb = appUserRepository.findByUsername(user.getUsername());
-
-        if (userInDb == null) {
-            System.out.println("USER DOES NOT EXIST IN DB");
-            throw new AuthException("USER DOES NOT EXIST IN DB");
+    public ResponseEntity<String> loginAppUser(@RequestBody LoginRequest loginRequest, HttpSession session) {
+        try {
+            boolean isAuthenticated = userService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+            if (isAuthenticated) {
+                session.setAttribute("user", loginRequest.getUsername());
+                return ResponseEntity.ok().body("");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication error: " + e.getMessage());
         }
-
-        System.out.println("USER " + userInDb.getUsername() + " IS FOUND");
-
-        /* if (userService.getHashedPassword(user.getPassword()) != userInDb.getPassword()) {
-            System.out.println(userService.getHashedPassword(user.getPassword()));
-            System.out.println(userInDb.getPassword());
-            System.out.println("PASSWORDS DO NOT MATCH");
-            throw new AuthException("Passwords do not match");
-        } */
-
-        return userService.getUserById(userInDb.getUserId());
     }
 
     @CrossOrigin
     @PostMapping(value = "/current-user")
     public @ResponseBody AppUser getCurrentUser(@RequestBody AppUser user) {
-        
+
         Long id = appUserRepository.findByUsername(user.getUsername()).getUserId();
 
         return userService.getUserById(id);
@@ -87,7 +79,6 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     @PreAuthorize("isAuthenticated()") // Allow only authenticated users
     public @ResponseBody List<AppUser> getUsers() {
-        
         return userService.getAllUsers();
     }
 

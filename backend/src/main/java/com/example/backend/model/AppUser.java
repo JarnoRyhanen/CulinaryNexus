@@ -37,6 +37,9 @@ public class AppUser {
     @OneToMany(mappedBy = "creator")
     private List<Recipe> createdRecipes;
 
+    @Column(name = "user_password_hash", nullable = true, length = 255)
+    private String passwordHash;
+
     public AppUser() {
         super();
     }
@@ -86,6 +89,14 @@ public class AppUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     @Override
