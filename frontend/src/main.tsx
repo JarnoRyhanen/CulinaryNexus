@@ -11,6 +11,7 @@ import Home from './components/Home.tsx'
 import Login from './components/Login.tsx'
 import { AuthProvider } from './components/AuthContext.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
+import Profile from './components/Profile.tsx'
 
 
 const router = createBrowserRouter([
@@ -37,7 +38,14 @@ const router = createBrowserRouter([
           <ProtectedRoute>
             <Home />
           </ProtectedRoute>,
-      }
+      },
+      {
+        path: "/profile",
+        element:
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>,
+      },
     ]
   },
 ]);

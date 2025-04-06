@@ -13,7 +13,7 @@ const Hero = () => {
                 <div className='my-8 mt-4 flex flex-col justify-center text-center'>
                     <h1 className='text-5xl font-semibold'>Welcome to CulinaryNexus</h1>
                     <p className='text-lg text-black/80 mt-4 '>Get ready to explore a world of flavors! Discover delicious recipes and unleash your inner chef with CulinaryNexus.</p>
-                    <Button className='flex mx-auto mt-5'>Get Started</Button>
+                    <Button className='flex mx-auto mt-5' href='/signup'>Get Started</Button>
                 </div>
 
                 <div className='flex flex-wrap lg:justify-center sm:flex-col lg:flex-row  gap-8 p-3'>

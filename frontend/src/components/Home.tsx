@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -12,7 +11,6 @@ const Home = () => {
     const [users, setUsers] = useState<User[]>([]);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
-    const authContext = useAuth();
 
 
     useEffect(() => {
@@ -32,12 +30,6 @@ const Home = () => {
             .catch(error => console.error('Error fetching users:', error));
     }, []);
 
-
-    const handleLogout = () => {
-        authContext?.logout();
-        navigate("/");
-    }
-
     return (
 
         <div className='bg-cyan-700 w-screen h-screen p-20'>
@@ -45,7 +37,7 @@ const Home = () => {
             <p>Welcome, {localStorage.getItem("username")} from localstorage</p>
             <p>Your email: {localStorage.getItem("email")}</p>
             <p>Your password: {localStorage.getItem("password")}</p>
-            <button onClick={handleLogout}>LOGOUT</button>
+            <button onClick={() => navigate("/profile")}>Profile</button>
             <div className="flex justify-stretch mx-8 p-2 flex-wrap">
                 {users.map(user => (
                     <div key={user.id} className='p-2 m-4 gap-1 flex flex-col 

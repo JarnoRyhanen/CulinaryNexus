@@ -7,12 +7,12 @@ export const navigation = [
     {
         id: "0",
         title: "Explore",
-        url: "#explore",
+        url: "/home",
     },
     {
         id: "1",
         title: "My recipes",
-        url: "#myrecipes",
+        url: "/myrecipes",
     },
     {
         id: "2",

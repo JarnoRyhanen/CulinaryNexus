@@ -39,8 +39,12 @@ const SignIn = () => {
           email: user.email,
         }),
       });
+      console.log(response);
+      
 
       response.json().then((promise) => {
+        console.log(promise);
+        
         localStorage.setItem("token", promise.token)
         authContext?.login();
         navigate("/home");

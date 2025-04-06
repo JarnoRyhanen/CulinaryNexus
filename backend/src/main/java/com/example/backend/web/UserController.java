@@ -4,9 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.login.CredentialNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +27,8 @@ import com.example.backend.security.JWTGenerator;
 import com.example.backend.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping
@@ -74,18 +80,44 @@ public class UserController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "/current-user")
-    public @ResponseBody AppUser getCurrentUser(@RequestBody AppUser user) {
+    @RequestMapping(value = "/current-user")
+    public ResponseEntity<AppUser> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
 
-        Long id = appUserRepository.findByUsername(user.getUsername()).getUserId();
-
-        return userService.getUserById(id);
+        AppUser currentUser = userService.getUserWithJWT(authHeader);
+        return ResponseEntity.ok(currentUser);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public @ResponseBody List<AppUser> getUsers(@RequestHeader("Authorization") String authHeader) {
         return userService.getAllUsers();
+    }
+
+    @CrossOrigin
+    @PutMapping("/reset-password")
+    public ResponseEntity<Map<String, String>> resetPassword(@RequestHeader("Authorization") String authHeader,
+            @RequestBody AppUser user) {
+
+        AppUser currentUser = userService.getUserWithJWT(authHeader);
+
+        if (currentUser == null) {
+            throw new UsernameNotFoundException("Provided user is null");
+        }
+
+        String newPassword = user.getPassword();
+
+        if (newPassword == null || newPassword.isEmpty()) {
+            throw new BadCredentialsException("The provided password is null or empty");
+        }
+
+        currentUser.setPassword(newPassword);
+        userService.updateUser(currentUser);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("New password", newPassword);
+        response.put("Message", "Password successfully updated");
+
+        return ResponseEntity.ok(response);
     }
 
 }
