@@ -22,3 +22,27 @@
         @apply font-sans bg-white text-black text-base;
     }
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f4f4f4; /* Background of the scrollbar track */
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar thumb */
+    border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color when hovered */
+}
+
+/* Fallback for non-WebKit browsers */
+.custom-scrollbar {
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #f4f4f4; /* Thumb color and track color */
+}
