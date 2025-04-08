@@ -1,19 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Recipe } from '../types';
+import RecipeCard from './RecipeCard';
 
-type Recipe = {
-    id: number;
-    title: string;
-    recipeDescription: string;
-    guide: string;
-    likes: number;
-    recipeType: string;
-    creator: string;
-    ingredients: {
-        ingredientName: string;
-    }[];
-    thumbnail_url: string;
-};
+
 
 const Home = () => {
 
@@ -35,9 +25,7 @@ const Home = () => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 console.log("response");
-
                 console.log(response);
-
                 return response.json();
             }).then(data => {
                 console.log("data");
@@ -49,28 +37,13 @@ const Home = () => {
 
     return (
 
-        <div className='bg-cyan-700  w-screen h-[100%] p-20'>
-            Home, THIS SHOULD ONLY BE VISIBLE AFTER AUTH
+        <div className='bg-[#FFF8E1] w-screen h-[100%] m-4 p-4'>
             <button onClick={() => navigate("/profile")}>Profile</button>
-            <div className="flex justify-stretch mx-8 p-2 flex-wrap">
+
+            <div className="flex justify-between px-12 p-2 flex-wrap gap-4 xl:max-w-screen-lg 2xl:max-w-screen-xl">
                 {recipes.map(recipe => (
-                    <div key={recipe.id} className='p-2 m-4 gap-1 flex flex-col 
-                    w-[16rem]  border border-black'>
-                        <h1 className="text-3xl font-bold">{recipe.title}</h1>
-                        <p>{recipe.recipeDescription}</p>
-                        <p>{recipe.guide}</p>
-                        <p>{recipe.likes}</p>
-                        <p>{recipe.recipeType}</p>
-                        <p>{recipe.creator}</p>
-                        <p>{recipe.thumbnail_url}</p>
-                        <div>
-                            <h2 className="text-xl font-semibold">Ingredients:</h2>
-                            <ul className="list-disc list-inside">
-                                {recipe.ingredients.map((ingredient, index) => (
-                                    <li key={index}>{ingredient.ingredientName}</li>
-                                ))}
-                            </ul>
-                        </div>
+                    <div key={recipe.id}>
+                        <RecipeCard recipe={recipe} />
                     </div>
                 ))}
             </div>

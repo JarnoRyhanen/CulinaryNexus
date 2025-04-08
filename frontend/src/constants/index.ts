@@ -2,6 +2,7 @@
 import CYODFATU from "../assets/hero/CYODFATU.jpg";
 import EGF from "../assets/hero/EGF.jpg";
 import FTTFI from "../assets/hero/FTTFI.jpg";
+import eggdish from "../assets/recipeCard/eggdish.jpg";
 
 export const navigation = [
     {
@@ -45,3 +46,21 @@ export const features = [
         imageUrl: EGF,
     },
 ]
+
+export const recipeCardTestData = {
+    id: "1",
+    imageUrl: eggdish,
+    title: "Breakfast Burrito",
+    description: "Tasty breakfast burrito",
+    guide: "This is how you make a breakfast burrito",
+    likes: "100",
+    creator: "Pertti eräreikä",
+    recipeType: "breakfast",
+    ingredients: [
+        { ingredientName: "Eggs", quantity: "2" },
+        { ingredientName: "Tortilla", quantity: "1" },
+        { ingredientName: "Cheese", quantity: "50g" },
+        { ingredientName: "Salsa", quantity: "2 tbsp" },
+        { ingredientName: "Avocado", quantity: "1/2" },
+    ],
+}
