@@ -3,7 +3,6 @@ import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import PasswordChange from './PasswordChange';
-import { eventNames } from 'process';
 
 const Profile = () => {
 
@@ -39,7 +38,7 @@ const Profile = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    });
 
     const handleLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -56,7 +55,7 @@ const Profile = () => {
     }
 
     const closePasswordChange = () => {
-        setBackgroundShade(false); 
+        setBackgroundShade(false);
     };
 
     return (

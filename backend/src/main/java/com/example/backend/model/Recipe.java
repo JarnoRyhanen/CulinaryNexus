@@ -47,14 +47,18 @@ public class Recipe {
     private AppUser creator;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "Recipe_ingredients",
-        joinColumns = @JoinColumn(name="recipe_id"),
-        inverseJoinColumns = @JoinColumn(name="ingredient_id")
-    )
+    @JoinTable(name = "Recipe_ingredients", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients;
 
     public Recipe() {
+    }
+
+    public Recipe(String title, String thumbnail_url, String recipeDescription, int likes, String guide) {
+        this.title = title;
+        this.thumbnail_url = thumbnail_url;
+        this.recipeDescription = recipeDescription;
+        this.likes = likes;
+        this.guide = guide;
     }
 
     public Recipe(String title, String thumbnail_url, String recipe_description, int likes, String guide,
@@ -124,7 +128,6 @@ public class Recipe {
     public void setCreator(AppUser creator) {
         this.creator = creator;
     }
-
 
     public String getRecipeDescription() {
         return recipeDescription;
