@@ -18,12 +18,14 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
 
   return (
     <>
-      <div className='p-2 m-2 gap-1 w-[27rem] h-full bg-[rgb(255,244,210)] border border-black rounded-2xl
-       flex flex-col items-center cursor-pointer'
+      <div
+        className='xl:p-4 mb-4 gap-2 w-full max-sm:max-h-[20rem] bg-[rgb(255,244,210)] border-b xl:border border-black rounded-2xl
+        block md:flex flex-col items-center flex-wrap cursor-pointer'
         onClick={() => onClick(recipe)}
       >
-        <img src={recipeCardTestData.imageUrl}
-          className='w-full max-h-[18rem] object-fi rounded-xl shadow-xl'
+        <img
+          src={recipeCardTestData.imageUrl}
+          className='w-full max-sm:max-h-[11rem] max-md:max-h-[15rem] lg:h-[15rem] object-cover xl:rounded-xl shadow-xl'
         />
 
         <div className='mt-1 flex flex-col items-center gap-4 w-full'>
@@ -38,11 +40,7 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
             <div className='flex flex-col items-end gap-1'>
               <div className='flex items-center gap-2'>
                 <p className='font-medium text-md'>
-                  {liked ? (
-                    likedRecipe
-                  ) : (
-                    recipe.likes
-                  )}
+                  {liked ? likedRecipe : recipe.likes}
                 </p>
                 <HeartIcon filled={liked} onClick={toggleLike} />
               </div>
@@ -51,7 +49,8 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
           </div>
         </div>
       </div>
-    </>)
+    </>
+  );
 }
 
 export default RecipeCard;

@@ -15,7 +15,7 @@ const RecipeInfo = ({ recipe }: RecipeInfoProps) => {
   return (
     <>
       {recipe ? (
-        <div className='p-4 h-full bg-white rounded-2xl shadow-2xl overflow-y-scroll overflow-x-hidden custom-scrollbar'>
+        <div className='p-4  h-full bg-white rounded-2xl shadow-2xl overflow-y-scroll overflow-x-hidden custom-scrollbar'>
           <div className='flex flex-col items-center gap-4'>
             <p className='text-4xl font-medium'>{recipe?.title}</p>
             <p className='text-md'>{recipe?.creator}</p>

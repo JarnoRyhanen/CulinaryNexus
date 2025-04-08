@@ -42,18 +42,19 @@ const Home = () => {
     return (
         <>
             <Header isFromHome={true} />
-            <div className='z-10 mt-[7.5rem] relative bg-[#FFF8E1] w-screen m-2 p-4 overflow-y-auto overflow-x-hidden'>
-                <div className='flex flex-row w-screen'>
-                    <div className="px-8 p-2 flex justify-between 
-                overflow-y-scroll custom-scrollbar
-                h-[50rem] flex-wrap gap-4 xl:max-w-screen-lg 2xl:max-w-screen-xl">
+            <div className='mt-[7.5rem] bg-[#FFF8E1] w-screen xl:p-4 overflow-y-auto overflow-x-hidden'>
+                <div className='flex flex-row flew-wrap justify-between w-screen md:gap-5'>
+
+                    <div className="md:px-8 p-2 block md:grid md:grid-cols-1 xl:flex flex-wrap gap-4 
+                overflow-y-scroll custom-scrollbar overflow-x-hidden
+                h-dvh w-full md:max-h-[50rem] md:min-w-[25rem] md:max-w-[38rem] xl:w-3/5 xl:h-[50rem] xl:max-w-screen-lg 2xl:max-w-screen-xl">
                         {recipes.map(recipe => (
-                            <div key={recipe.id}>
+                        <div key={recipe.id} className="xl:w-[48%]">
                                 <RecipeCard recipe={recipe} onClick={handelSelectRecipe} />
                             </div>
                         ))}
                     </div>
-                    <div className='bg-emerald-900/90 h-[50rem] p-2 m-2 mr-10 xl:w-[31%] flex-wrap rounded-2xl sticky top-[4.5rem]'>
+                    <div className='bg-emerald-900/90 p-2 m-2 mr-10 max-md:hidden md:min-w-[25rem] md:h-[50rem] md:max-w-[45%] xl:min-w-[27%] xl:max-w-[35%] flex-wrap rounded-2xl sticky top-[7.5rem]'>
                         <RecipeInfo recipe={selectedRecipe} />
                     </div>
                 </div>
