@@ -9,11 +9,13 @@ export const navigation = [
         id: "0",
         title: "Explore",
         url: "/home",
+        showOnHome: true,
     },
     {
         id: "1",
         title: "My recipes",
         url: "/myrecipes",
+        showOnHome: true,
     },
     {
         id: "2",
@@ -26,6 +28,13 @@ export const navigation = [
         title: "Sign in",
         url: "/login",
         onlyMobile: true,
+    },
+    {
+        id: "4",
+        title: "Profile",
+        url: "/profile",
+        onlyMobile: true,
+        showOnHome: true,
     },
 ];
 

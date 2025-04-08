@@ -38,7 +38,7 @@ const Profile = () => {
 
     useEffect(() => {
         fetchData();
-    });
+    },[]);
 
     const handleLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();

@@ -5,7 +5,7 @@ import Hero from './Hero';
 const Landing = () => {
     return (
         <div className='pt-[4.75rem] lg:pt-[6.5rem] overflow-hidden'>
-        <Header />
+        <Header isFromHome={false}/>
         <Hero />
         </div>
     )

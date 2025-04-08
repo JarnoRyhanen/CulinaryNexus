@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from '../assets/logo.png';
 import { useLocation } from 'react-router-dom';
 import { disablePageScroll, enablePageScroll } from "scroll-lock";
@@ -8,7 +8,11 @@ import MenuSvg from '../assets/MenuSvg';
 import Button from './Button';
 
 
-const Header = () => {
+type HeaderTypes = {
+    isFromHome: boolean;
+}
+
+const Header = ({ isFromHome }: HeaderTypes) => {
 
     const pathname = useLocation();
     const [openNavigation, setopenNavigation] = useState(false);
@@ -30,6 +34,11 @@ const Header = () => {
         setopenNavigation(false);
     };
 
+    useEffect(() => {
+        console.log(isFromHome);
+
+    }, []);
+
     return (
         <div className={`fixed top-0 left-0 w-full z-50 lg:backdrop-blur-sm shadow-xl 
           ${openNavigation ? 'bg-black' : 'bg-black/90 backdrop-blur-sm'}`}>
@@ -45,27 +54,39 @@ const Header = () => {
 
                     <div className="relative z-2 flex flex-col 
                     items-center justify-center m-auto lg:flex-row">
-                        {navigation.map((item) => (
-                            <a key={item.id} href={item.url} onClick={handleClick}
-                                className={`block relative font-code text-2xl uppercase
+                        {navigation
+                            .filter((item) => isFromHome ? item.showOnHome : true)
+                            .map((item) => (
+                                <a key={item.id} href={item.url} onClick={handleClick}
+                                    className={`block relative text-2xl uppercase
                                 text-n-1 transition-colors hover:text-color-1 
-                                ${item.onlyMobile ? 'lg:hidden' : ""}
+
+                                ${item.onlyMobile ? 'lg:hidden' : ''}
+                                
                                 px-6 py-4  md:py-8 lg:-mr-0.25 lg:text-xs lg:font-semibold
                                 ${item.url === pathname.hash ? 'z-2' : 'lg:text-n-1/50'} 
                                 lg:leading-5 lg:hover:text-color-1 xl:px-12`}>
-                                {item.title}
-                            </a>
-                        ))}
+                                    {item.title}
+                                </a>
+                            ))}
                     </div>
                     <HambugerMenu />
                 </nav>
 
-                <a href='/signup' className='button hidden mr-8 text-black/1050 transition-colors hover:text-gray-500 lg:block'>
-                    New Account
-                </a>
-                <Button className="hidden lg:flex" href="/login">
-                    Sign in
-                </Button>
+                {!isFromHome ? (
+                    <>
+                        <a href='/signup' className='button hidden mr-8 text-black/1050 transition-colors hover:text-gray-500 lg:block'>
+                            New Account
+                        </a>
+                        <Button className="hidden lg:flex" href="/login">
+                            Sign in
+                        </Button>
+                    </>
+                ) : (
+                    <Button className="hidden lg:flex" href="/profile">
+                        Profile
+                    </Button>
+                )}
 
                 <Button className="ml-auto lg:hidden" px='px-3' onClick={toggleNavigation}>
                     <MenuSvg openNavigation={openNavigation} />
