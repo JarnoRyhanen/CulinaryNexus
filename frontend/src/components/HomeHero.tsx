@@ -3,7 +3,7 @@ import SlideShow from "./SlideShow";
 
 const HomeHero = () => {
     return (
-        <div className='bg-[#FFF8E1] mt-[6rem] md:px-4 z-100 h-fit flex flex-col'>
+        <div className='bg-[#FFF8E1] md:px-4 z-100 h-fit flex flex-col'>
             <h2 className='mt-6 p-4 font-semibold text-xl md:text-3xl text-orange-800 bg-orange-400/30 text-center rounded-2xl'>Browse the greatest recipies on the planet!</h2>
 
             <div className="block md:flex flex-row mt-4 md:p-2 bg-amber-800/80 rounded-2xl">

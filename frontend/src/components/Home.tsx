@@ -4,6 +4,7 @@ import RecipeCard from './RecipeCard';
 import RecipeInfo from './RecipeInfo';
 import Header from './Header';
 import HomeHero from './HomeHero';
+import Search from './Search';
 
 const Home = () => {
 
@@ -11,7 +12,8 @@ const Home = () => {
     const [selectedRecipe, setSelectedRecipes] = useState<Recipe | null>(null);
     const token = localStorage.getItem("token");
 
-    useEffect(() => {
+
+    const fetchData = () => {
         fetch('http://localhost:8080/recipes', {
             headers: {
                 'Authorization': token ? `Bearer ${token}` : "",
@@ -32,18 +34,30 @@ const Home = () => {
                 setRecipes(data);
             })
             .catch(error => console.error('Error fetching users:', error));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+
+    useEffect(() => {
+        fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handelSelectRecipe = (recipe: Recipe) => {
         setSelectedRecipes(recipe);
     };
 
+    const handleSearchResults = (data: Recipe[]) => {
+        if (data.length == 0) {
+            setRecipes([]);
+        } else {
+            setRecipes(data);
+        }
+    };
+
     return (
         <>
             <Header isFromHome={true} />
             <HomeHero />
-            
+            <Search onSearchResults={handleSearchResults} />
             <div className=' bg-[#FFF8E1] w-screen xl:p-4 overflow-y-auto overflow-x-hidden'>
                 <div className='flex flex-row flew-wrap justify-between w-screen md:gap-5'>
 
@@ -51,7 +65,7 @@ const Home = () => {
                 overflow-y-scroll custom-scrollbar overflow-x-hidden
                 h-dvh w-full md:max-h-[50rem] md:min-w-[25rem] md:max-w-[38rem] xl:w-3/5 xl:h-[50rem] xl:max-w-screen-lg 2xl:max-w-screen-xl">
                         {recipes.map(recipe => (
-                        <div key={recipe.id} className="xl:w-[48%]">
+                            <div key={recipe.id} className="xl:w-[48%]">
                                 <RecipeCard recipe={recipe} onClick={handelSelectRecipe} />
                             </div>
                         ))}

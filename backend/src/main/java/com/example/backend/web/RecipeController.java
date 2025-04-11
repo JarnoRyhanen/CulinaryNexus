@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.dto.RecipeDto;
 import com.example.backend.model.Ingredient;
-import com.example.backend.model.Recipe;
 import com.example.backend.repositories.IngredientRepository;
-import com.example.backend.repositories.RecipeRepository;
 import com.example.backend.services.RecipeService;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping
@@ -40,8 +40,8 @@ public class RecipeController {
     }
 
     @CrossOrigin
-    @GetMapping("/message")
-    public String getMessage() {
-        return "HELLO BACKEND";
+    @GetMapping("/recipes/{recipeName}")
+    public @ResponseBody List<RecipeDto> searchRecipeByName(@PathVariable String recipeName) {
+        return recipeService.getRecipesByName(recipeName);
     }
 }

@@ -20,7 +20,7 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
     <>
       <div
         className='xl:p-4 mb-4 gap-2 w-full max-sm:max-h-[20rem] bg-[rgb(255,244,210)] border-b xl:border border-black rounded-2xl
-        block md:flex flex-col items-center flex-wrap cursor-pointer'
+        block md:flex flex-col items-center flex-wrap cursor-pointer focus:ring-orange-500'
         onClick={() => onClick(recipe)}
       >
         <img

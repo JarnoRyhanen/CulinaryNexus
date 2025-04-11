@@ -34,10 +34,10 @@ const Header = ({ isFromHome }: HeaderTypes) => {
         setopenNavigation(false);
     };
 
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
 
     return (
-        <div className={`fixed top-0 left-0 w-full z-50 lg:backdrop-blur-sm shadow-xl 
+        <div className={` ${isFromHome ? "relative" : "fixed"} top-0 left-0 w-full z-50 lg:backdrop-blur-sm shadow-xl 
           ${openNavigation ? 'bg-black' : 'bg-black/90 backdrop-blur-sm'}`}>
             <div className=' flex items-center justify-between p-4 px-10 bg-green-600'>
                 <a className="flex items-center justify-start gap-4" href="#hero">

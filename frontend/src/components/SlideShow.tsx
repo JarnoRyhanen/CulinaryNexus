@@ -1,6 +1,5 @@
-import React from 'react';
 import { Slide } from 'react-slideshow-image';
-import 'react-slideshow-image/dist/styles.css'; // Import the default styles for the slideshow
+import 'react-slideshow-image/dist/styles.css';
 import { slideShow } from '../constants';
 
 const SlideShow = () => {
@@ -14,6 +13,7 @@ const SlideShow = () => {
                             alt={`Slide ${slide.id}`}
                             className='md:rounded-xl object-cover h-full w-full'
                         />
+                        <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-t from-black/15 to-transparent md:rounded-b-xl"></div>
                     </div>
                 ))}
             </Slide>
