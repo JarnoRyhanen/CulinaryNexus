@@ -3,8 +3,7 @@ import { Recipe } from '../types';
 import RecipeCard from './RecipeCard';
 import RecipeInfo from './RecipeInfo';
 import Header from './Header';
-
-
+import HomeHero from './HomeHero';
 
 const Home = () => {
 
@@ -33,6 +32,7 @@ const Home = () => {
                 setRecipes(data);
             })
             .catch(error => console.error('Error fetching users:', error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handelSelectRecipe = (recipe: Recipe) => {
@@ -42,7 +42,9 @@ const Home = () => {
     return (
         <>
             <Header isFromHome={true} />
-            <div className='mt-[7.5rem] bg-[#FFF8E1] w-screen xl:p-4 overflow-y-auto overflow-x-hidden'>
+            <HomeHero />
+            
+            <div className=' bg-[#FFF8E1] w-screen xl:p-4 overflow-y-auto overflow-x-hidden'>
                 <div className='flex flex-row flew-wrap justify-between w-screen md:gap-5'>
 
                     <div className="md:px-8 p-2 block md:grid md:grid-cols-1 xl:flex flex-wrap gap-4 

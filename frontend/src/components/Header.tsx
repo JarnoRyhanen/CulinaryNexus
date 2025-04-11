@@ -34,10 +34,7 @@ const Header = ({ isFromHome }: HeaderTypes) => {
         setopenNavigation(false);
     };
 
-    useEffect(() => {
-        console.log(isFromHome);
-
-    }, []);
+    useEffect(() => {}, []);
 
     return (
         <div className={`fixed top-0 left-0 w-full z-50 lg:backdrop-blur-sm shadow-xl 

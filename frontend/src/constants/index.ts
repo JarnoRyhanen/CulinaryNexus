@@ -3,6 +3,12 @@ import CYODFATU from "../assets/hero/CYODFATU.jpg";
 import EGF from "../assets/hero/EGF.jpg";
 import FTTFI from "../assets/hero/FTTFI.jpg";
 import eggdish from "../assets/recipeCard/eggdish.jpg";
+import indian from "../assets/slideshow/indian.jpg";
+import mexican from "../assets/slideshow/mexican.jpg";
+import pannacotta from "../assets/slideshow/pannacotta.jpg";
+import pasta from "../assets/slideshow/pasta.jpg";
+import soup from "../assets/slideshow/soup.jpg";
+import steak from "../assets/slideshow/steak.jpg";
 
 export const navigation = [
     {
@@ -37,6 +43,33 @@ export const navigation = [
         showOnHome: true,
     },
 ];
+
+export const slideShow = [
+    {
+        id: "1",
+        imageUrl: steak,
+    },
+    {
+        id: "2",
+        imageUrl: soup,
+    },
+    {
+        id: "3",
+        imageUrl: mexican,
+    },
+    {
+        id: "4",
+        imageUrl: pannacotta,
+    },
+    {
+        id: "5",
+        imageUrl: indian,
+    },
+    {
+        id: "6",
+        imageUrl: pasta,
+    },
+]
 
 export const features = [
     {
