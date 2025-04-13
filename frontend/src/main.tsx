@@ -12,6 +12,7 @@ import Login from './components/Login.tsx'
 import { AuthProvider } from './components/AuthContext.tsx'
 import ProtectedRoute from './components/ProtectedRoute.tsx'
 import Profile from './components/Profile.tsx'
+import CreateRecipes from './components/CreateRecipes.tsx'
 
 
 const router = createBrowserRouter([
@@ -37,6 +38,13 @@ const router = createBrowserRouter([
         element:
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>,
+      },
+      {
+        path: "/create-recipes",
+        element:
+          <ProtectedRoute>
+            <CreateRecipes />
           </ProtectedRoute>,
       },
       {

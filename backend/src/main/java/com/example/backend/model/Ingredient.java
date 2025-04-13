@@ -22,7 +22,7 @@ public class Ingredient {
     @Column(name = "ingredient_name", nullable = false, length = 20)
     private String ingredientName;
 
-    @Column(name = "unit", nullable = false)
+    @Column(name = "unit", nullable = true)
     private String unit;
 
     @ManyToMany(mappedBy = "ingredients")

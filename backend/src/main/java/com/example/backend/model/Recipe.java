@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -26,7 +27,7 @@ public class Recipe {
     @Column(nullable = false, length = 50)
     private String title;
 
-    @Column(length = 100)
+    @Lob
     private String thumbnail_url;
 
     @Column(name = "recipe_description", nullable = false, columnDefinition = "TEXT")
@@ -147,7 +148,7 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return "Recipe [recipeId=" + recipeId + ", title=" + title + ", thumbnail_url=" + thumbnail_url
+        return "Recipe [recipeId=" + recipeId + ", title=" + title + ", thumbnail_url=" 
                 + ", recipeDescription=" + recipeDescription + ", likes=" + likes + ", guide=" + guide + ", recipeType="
                 + recipeType + ", creator=" + creator + ", recipeIngredients=" + ingredients + "]";
     }

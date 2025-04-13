@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Recipe } from '../types';
-import { recipeCardTestData } from '../constants';
 import HeartIcon from '../assets/HeartIcon';
 
 interface RecipeCardProps {
@@ -24,7 +23,7 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
         onClick={() => onClick(recipe)}
       >
         <img
-          src={recipeCardTestData.imageUrl}
+          src={recipe.thumbnail_url}
           className='w-full max-sm:max-h-[11rem] max-md:max-h-[15rem] lg:h-[15rem] object-cover xl:rounded-xl shadow-xl'
         />
 

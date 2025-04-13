@@ -1,6 +1,7 @@
 package com.example.backend.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,13 @@ import com.example.backend.model.Ingredient;
 import com.example.backend.repositories.IngredientRepository;
 import com.example.backend.services.RecipeService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping
@@ -54,4 +60,19 @@ public class RecipeController {
     public @ResponseBody List<RecipeDto> searchRecipeByCreator(@PathVariable String creatorName) {
         return recipeService.getRecipesByCreator(creatorName);
     }
+
+    @CrossOrigin
+    @PostMapping("/newRecipe")
+    public ResponseEntity<Map<String, String>> addNewRecipe(@RequestBody RecipeDto recipe) {
+        Map<String, String> response = new HashMap<>();
+
+        if (recipe != null) {
+            recipeService.addRecipe(recipe);
+            response.put("Message", "Recipe added successfully");
+        } else {
+            response.put("Message", "Provided recipe was null");
+        }
+        return ResponseEntity.ok(response);
+    }
+
 }

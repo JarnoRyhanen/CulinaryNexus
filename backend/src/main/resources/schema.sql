@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS Recipe_type (
 CREATE TABLE IF NOT EXISTS Ingredient (
     ingredient_id INT NOT NULL AUTO_INCREMENT,
     ingredient_name VARCHAR(20) NOT NULL,
-    unit VARCHAR(15) NOT NULL,
+    unit VARCHAR(15),
     PRIMARY KEY (ingredient_id)
 );
 
 CREATE TABLE IF NOT EXISTS Recipe (
     recipe_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
-    thumbnail_url VARCHAR(100),
+    thumbnail_url TEXT,
     recipe_description TEXT NOT NULL,
     likes INT DEFAULT 0,
     guide TEXT NOT NULL,

@@ -41,7 +41,7 @@ const Home = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handelSelectRecipe = (recipe: Recipe) => {
+    const handleSelectRecipe = (recipe: Recipe) => {
         setSelectedRecipes(recipe);
     };
 
@@ -66,11 +66,11 @@ const Home = () => {
                 h-dvh w-full md:max-h-[50rem] md:min-w-[25rem] md:max-w-[38rem] xl:w-3/5 xl:h-[50rem] xl:max-w-screen-lg 2xl:max-w-screen-xl">
                         {recipes.map(recipe => (
                             <div key={recipe.id} className="xl:w-[48%]">
-                                <RecipeCard recipe={recipe} onClick={handelSelectRecipe} />
+                                <RecipeCard recipe={recipe} onClick={handleSelectRecipe} />
                             </div>
                         ))}
                     </div>
-                    <div className='bg-emerald-900/90 p-2 m-2 mr-10 max-md:hidden md:min-w-[25rem] md:h-[50rem] md:max-w-[45%] xl:min-w-[27%] xl:max-w-[35%] flex-wrap rounded-2xl sticky top-[7.5rem]'>
+                    <div className='bg-emerald-900/90 p-4 m-2 mr-14 max-md:hidden md:min-w-[25rem] md:h-[50rem] md:max-w-[45%] xl:min-w-[27%] xl:max-w-[35%] flex-wrap rounded-2xl sticky top-[7.5rem]'>
                         <RecipeInfo recipe={selectedRecipe} />
                     </div>
                 </div>
