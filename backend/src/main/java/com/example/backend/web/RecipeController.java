@@ -16,7 +16,6 @@ import com.example.backend.services.RecipeService;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @RestController
 @RequestMapping
 public class RecipeController {
@@ -26,7 +25,6 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-    
     @CrossOrigin
     @RequestMapping(value = "/recipes", method = RequestMethod.GET)
     public @ResponseBody List<RecipeDto> getRecipes() {
@@ -43,5 +41,17 @@ public class RecipeController {
     @GetMapping("/recipes/{recipeName}")
     public @ResponseBody List<RecipeDto> searchRecipeByName(@PathVariable String recipeName) {
         return recipeService.getRecipesByName(recipeName);
+    }
+
+    @CrossOrigin
+    @GetMapping("/recipes/types/{typeName}")
+    public @ResponseBody List<RecipeDto> searchRecipeByType(@PathVariable String typeName) {
+        return recipeService.getRecipesByType(typeName);
+    }
+
+    @CrossOrigin
+    @GetMapping("/recipes/creators/{creatorName}")
+    public @ResponseBody List<RecipeDto> searchRecipeByCreator(@PathVariable String creatorName) {
+        return recipeService.getRecipesByCreator(creatorName);
     }
 }

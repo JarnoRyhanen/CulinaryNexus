@@ -40,10 +40,19 @@ public class RecipeService {
     }
 
     public List<RecipeDto> getRecipesByName(String title) {
-
         List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByTitle(title);
-
         return castToDtos(recipes);
     }
 
+    public List<RecipeDto> getRecipesByType(String type) {
+
+        List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByRecipeType(type);
+        return castToDtos(recipes);
+    }
+
+    public List<RecipeDto> getRecipesByCreator(String creatorName) {
+
+        List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByCreator(creatorName);
+        return castToDtos(recipes);
+    }
 }
