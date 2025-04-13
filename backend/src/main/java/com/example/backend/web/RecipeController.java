@@ -60,7 +60,7 @@ public class RecipeController {
     public @ResponseBody List<RecipeDto> searchRecipeByCreator(@PathVariable String creatorName) {
         return recipeService.getRecipesByCreator(creatorName);
     }
-
+    
     @CrossOrigin
     @PostMapping("/newRecipe")
     public ResponseEntity<Map<String, String>> addNewRecipe(@RequestBody RecipeDto recipe) {

@@ -12,12 +12,13 @@ public class IngredientService {
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    public void addIngredient(Ingredient ingredient) {
+    public Ingredient addIngredient(Ingredient ingredient) {
 
         Ingredient newIngredient = new Ingredient();
         newIngredient.setIngredientName(ingredient.getIngredientName());
         newIngredient.setUnit("Grams");
         ingredientRepository.save(newIngredient);
+        return newIngredient;
     }
 
 }

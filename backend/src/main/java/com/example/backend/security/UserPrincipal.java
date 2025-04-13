@@ -17,6 +17,8 @@ public class UserPrincipal implements UserDetails {
         this.user = user;
     }
 
+    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("USER"));
@@ -30,5 +32,11 @@ public class UserPrincipal implements UserDetails {
     @Override
     public String getUsername() {
         return user.getPassword();
+    }
+
+
+
+    public AppUser getUser() {
+        return user;
     }
 }

@@ -3,27 +3,24 @@ package com.example.backend.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.dto.RecipeDto;
-import com.example.backend.model.AppUser;
 import com.example.backend.model.Ingredient;
 import com.example.backend.model.Recipe;
 import com.example.backend.model.RecipeType;
-import com.example.backend.repositories.AppUserRepository;
 import com.example.backend.repositories.IngredientRepository;
 import com.example.backend.repositories.RecipeRepository;
 import com.example.backend.repositories.RecipeTypeRepository;
+import com.example.backend.security.UserPrincipal;
 
 @Service
 public class RecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
-
-    @Autowired
-    private AppUserRepository userRepository;
-
+    
     @Autowired
     private RecipeTypeRepository recipeTypeRepository;
 
@@ -50,12 +47,15 @@ public class RecipeService {
 
     public void addRecipe(RecipeDto recipe) {
 
-        AppUser creator = userRepository.findByUsername(recipe.getCreator());
+        UserPrincipal currentUser = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
 
+        System.out.println(recipe.toString());
         RecipeType recipeType = recipeTypeRepository.findByTypeName(recipe.getRecipeType());
         if (recipeType == null) {
             RecipeType newRecipeType = new RecipeType(recipe.getRecipeType());
             recipeTypeRepository.save(newRecipeType);
+            recipeType = newRecipeType;
         }
 
         Recipe newRecipe = new Recipe();
@@ -65,17 +65,20 @@ public class RecipeService {
         newRecipe.setLikes(0);
         newRecipe.setRecipeType(recipeType);
         newRecipe.setThumbnail_url(recipe.getThumbnail_url());
-        newRecipe.setCreator(creator);
+        newRecipe.setCreator(currentUser.getUser());
 
         List<Ingredient> ingredients = new ArrayList<>();
-        for (Ingredient ingredientDto : recipe.getIngredients()) {
-            Ingredient ingredient = ingredientRepository.findByIngredientName(ingredientDto.getIngredientName());
-            if (ingredient == null) {
-                ingredientService.addIngredient(ingredientDto);
-            }
-            ingredients.add(ingredient);
-        }
 
+        for (Ingredient ingredientDto : recipe.getIngredients()) {
+            Ingredient ingredient = new Ingredient();
+            if (ingredientRepository.findByIngredientName(ingredientDto.getIngredientName()) == null) {
+                Ingredient newIngredient = ingredientService.addIngredient(ingredientDto);
+                ingredients.add(newIngredient);
+            } else {
+                ingredient = ingredientRepository.findByIngredientName(ingredientDto.getIngredientName());
+                ingredients.add(ingredient);
+            }
+        }
         newRecipe.setIngredients(ingredients);
         recipeRepository.save(newRecipe);
     }
