@@ -24,8 +24,10 @@ public class RecipeDto {
 
     private List<Ingredient> ingredients;
 
-    public RecipeDto(String title, String thumbnail_url, String recipeDescription, int likes, String guide,
+    public RecipeDto(Long recipeId, String title, String thumbnail_url, String recipeDescription, int likes,
+            String guide,
             String recipeType, String creator, List<Ingredient> ingredients) {
+        this.recipeId = recipeId;
         this.title = title;
         this.thumbnail_url = thumbnail_url;
         this.recipeDescription = recipeDescription;
@@ -35,6 +37,8 @@ public class RecipeDto {
         this.creator = creator;
         this.ingredients = ingredients;
     }
+
+    
 
     public String getTitle() {
         return title;
@@ -102,11 +106,15 @@ public class RecipeDto {
 
     @Override
     public String toString() {
-        return "RecipeDto [recipeId=" + recipeId + ", title=" + title + ", thumbnail_url=" 
+        return "RecipeDto [recipeId=" + recipeId + ", title=" + title + ", thumbnail_url="
                 + ", recipeDescription=" + recipeDescription + ", likes=" + likes + ", guide=" + guide + ", recipeType="
                 + recipeType + ", creator=" + creator + ", ingredients=" + ingredients + "]";
     }
 
-    
+
+
+    public Long getRecipeId() {
+        return recipeId;
+    }
 
 }

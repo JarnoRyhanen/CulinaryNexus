@@ -1,6 +1,7 @@
 package com.example.backend.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -60,7 +62,13 @@ public class RecipeController {
     public @ResponseBody List<RecipeDto> searchRecipeByCreator(@PathVariable String creatorName) {
         return recipeService.getRecipesByCreator(creatorName);
     }
-    
+
+    @CrossOrigin
+    @GetMapping("/recipes/myrecipes")
+    public @ResponseBody List<RecipeDto> searchMyRecipes() {
+        return recipeService.getMyRecipes();
+    }
+
     @CrossOrigin
     @PostMapping("/newRecipe")
     public ResponseEntity<Map<String, String>> addNewRecipe(@RequestBody RecipeDto recipe) {
@@ -73,6 +81,18 @@ public class RecipeController {
             response.put("Message", "Provided recipe was null");
         }
         return ResponseEntity.ok(response);
+    }
+
+    @CrossOrigin
+    @PutMapping("/recipes/editRecipe")
+    public ResponseEntity<String> editRecipe(@RequestBody RecipeDto updatedRecipe) {
+        try {
+            Long id = updatedRecipe.getRecipeId();
+            recipeService.editRecipe(id, updatedRecipe);
+            return ResponseEntity.ok("Recipe updated successfully.");
+        } catch (IllegalArgumentException | SecurityException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
     }
 
 }

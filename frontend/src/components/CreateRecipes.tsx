@@ -1,25 +1,33 @@
 import React, { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const CreateRecipes = () => {
 
     const token = localStorage.getItem("token");
+    const location = useLocation();
+    const recipeToEdit = location.state?.recipe;
+    const navigate = useNavigate();
 
-    const [recipe, setRecipe] = useState({
+    const [recipe, setRecipe] = useState(recipeToEdit || {
         title: '',
         recipeDescription: '',
         guide: '',
         likes: 0,
         recipeType: '',
-        creator: "jarno",
-        ingredients: Array<{ ingredientName: string }>(),
+        creator: "",
+        ingredients: [],
         thumbnail_url: ''
     });
 
     const [ingredientCounter, setIngredientCounter] = useState(0);
-    const [ingredients, setIngredients] = useState<{ name: string; }[]>([]);
+    const [ingredients, setIngredients] = useState<{ name: string }[]>(
+        recipeToEdit?.ingredients?.map((ingredient: { ingredientName: string }) => ({
+            name: ingredient.ingredientName,
+        })) || []
+    );
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRecipe({ ...recipe, [event.target.name]: event.target.value })
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setRecipe({ ...recipe, [event.target.name]: event.target.value });
     }
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,9 +50,9 @@ const CreateRecipes = () => {
         };
 
         setIngredients(updatedIngredients);
-        setRecipe({ 
-            ...recipe, 
-            ingredients: updatedIngredients.map(ingredient => ({ ingredientName: ingredient.name })) 
+        setRecipe({
+            ...recipe,
+            ingredients: updatedIngredients.map(ingredient => ({ ingredientName: ingredient.name }))
         });
     };
 
@@ -55,11 +63,12 @@ const CreateRecipes = () => {
         }
     }
 
-    const addRecipe = () => {
+    const addEditRecipe = () => {
         event?.preventDefault();
-
-        fetch("http://localhost:8080/newRecipe", {
-            method: "POST",
+        const endpoint = recipeToEdit ? `http://localhost:8080/recipes/editRecipe` : "http://localhost:8080/newRecipe";
+        const method = recipeToEdit ? "PUT" : "POST";
+        fetch(endpoint, {
+            method: method,
             headers: {
                 'Authorization': token ? `Bearer ${token}` : "",
                 'Accept': 'application/json',
@@ -70,12 +79,17 @@ const CreateRecipes = () => {
             }),
         })
             .then((response) => {
-                console.log(response);
-                return response.json();
+                if (!recipeToEdit) {
+                    return response.json();
+                }
             })
-            .then((data) => {
-                alert("LÄPI MENi")
-                console.log(data);
+            .then(() => {
+                if (recipeToEdit) {
+                    alert("Recipe modified successfully");
+                } else {
+                    alert("Recipe added successfully");
+                }
+                navigate(-1);
             });
     };
 
@@ -87,7 +101,11 @@ const CreateRecipes = () => {
             <div className='pt-8 min-h-[48rem] h-fit bg-[#FFF8E1] flex flex-col z-10'>
 
                 <div className='p-4 mx-auto h-fit w-2/3 text-center border-b-2 border-b-orange-800'>
-                    <h2 className='font-semibold text-2xl'>Create your own recipies here!</h2>
+                    {recipeToEdit ? (
+                        <h2 className='font-semibold text-2xl'>Edit recipe</h2>
+                    ) : (
+                        <h2 className='font-semibold text-2xl'>Create your own recipies here!</h2>
+                    )}
                 </div>
 
                 <form className='w-full h-fit flex flex-col items-center'>
@@ -127,13 +145,13 @@ const CreateRecipes = () => {
                         </div>
                     )}
 
-                    <input
-                        type='text'
+                    <textarea
                         placeholder='Guide'
                         value={recipe.guide}
                         onChange={handleChange}
                         name="guide"
-                        className={classes} />
+                        className={`p-3 ${classes} text-base font-normal resize-y`}
+                    />
 
                     <input
                         type='text'
@@ -170,12 +188,22 @@ const CreateRecipes = () => {
                             </div>
                         ))}
                     </div>
-                    <button
-                        className='my-4 bg-orange-500/80 text-white px-4 py-2 rounded-lg shadow-md hover:bg-orange-600 transition'
-                        onClick={addRecipe}>Add new Recipe</button>
+                    {recipeToEdit ? (
+                        <button
+                            className='my-4 bg-orange-500/80 text-white px-4 py-2 rounded-lg shadow-md hover:bg-orange-600 transition'
+                            onClick={addEditRecipe}>
+                            Edit Recipe
+                        </button>
+                    ) : (
+                        <button
+                            className='my-4 bg-orange-500/80 text-white px-4 py-2 rounded-lg shadow-md hover:bg-orange-600 transition'
+                            onClick={addEditRecipe}>
+                            Add new Recipe
+                        </button>
+                    )}
                 </form>
 
-            </div>
+            </div >
 
         </>
     )

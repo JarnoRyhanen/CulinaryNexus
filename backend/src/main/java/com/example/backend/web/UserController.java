@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.security.auth.login.CredentialNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.model.AppUser;
 import com.example.backend.model.LoginRequest;
-import com.example.backend.repositories.AppUserRepository;
 import com.example.backend.security.JWTGenerator;
 import com.example.backend.services.UserService;
 
@@ -38,9 +35,6 @@ public class UserController {
 
     @Autowired
     private JWTGenerator jwtGenerator;
-
-    @Autowired
-    private AppUserRepository appUserRepository;
 
     @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/signin")

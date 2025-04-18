@@ -25,12 +25,8 @@ const Home = () => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                console.log("response");
-                console.log(response);
                 return response.json();
             }).then(data => {
-                console.log("data");
-                console.log(data);
                 setRecipes(data);
             })
             .catch(error => console.error('Error fetching users:', error));
@@ -64,8 +60,8 @@ const Home = () => {
                     <div className="md:px-8 p-2 block md:grid md:grid-cols-1 xl:flex flex-wrap gap-4 
                 overflow-y-scroll custom-scrollbar overflow-x-hidden
                 h-dvh w-full md:max-h-[50rem] md:min-w-[25rem] md:max-w-[38rem] xl:w-3/5 xl:h-[50rem] xl:max-w-screen-lg 2xl:max-w-screen-xl">
-                        {recipes.map(recipe => (
-                            <div key={recipe.id} className="xl:w-[48%]">
+                        {recipes.map((recipe, index) => (
+                            <div key={index} className="xl:w-[48%]">
                                 <RecipeCard recipe={recipe} onClick={handleSelectRecipe} />
                             </div>
                         ))}

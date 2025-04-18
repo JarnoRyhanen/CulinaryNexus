@@ -20,7 +20,7 @@ public class RecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
-    
+
     @Autowired
     private RecipeTypeRepository recipeTypeRepository;
 
@@ -34,15 +34,14 @@ public class RecipeService {
         List<RecipeDto> recipesWithoutSomeInfo = new ArrayList<RecipeDto>();
 
         for (Recipe recipe : recipes) {
-            RecipeDto newRecipe = new RecipeDto(recipe.getTitle(), recipe.getThumbnail_url(),
+            System.out.println(recipe.getRecipe_id());
+            RecipeDto newRecipe = new RecipeDto(recipe.getRecipe_id(), recipe.getTitle(), recipe.getThumbnail_url(),
                     recipe.getRecipeDescription(),
                     recipe.getLikes(), recipe.getGuide(), recipe.getRecipeType().getTypeName(),
                     recipe.getCreator().getUsername(), recipe.getIngredients());
-
             recipesWithoutSomeInfo.add(newRecipe);
         }
         return recipesWithoutSomeInfo;
-
     }
 
     public void addRecipe(RecipeDto recipe) {
@@ -107,4 +106,55 @@ public class RecipeService {
         List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByCreator(creatorName);
         return castToDtos(recipes);
     }
+
+    public List<RecipeDto> getMyRecipes() {
+        UserPrincipal currentUser = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = currentUser.getUser().getUsername();
+
+        List<Recipe> recipes = recipeRepository.searchRecipeByCreator(username);
+        return castToDtos(recipes);
+    }
+
+    public void editRecipe(Long recipeId, RecipeDto updatedRecipe) {
+        UserPrincipal currentUser = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        Recipe existingRecipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new IllegalArgumentException("Recipe not found with ID: " + recipeId));
+
+        // Ensure the current user is the creator of the recipe
+        if (!existingRecipe.getCreator().getUsername().equals(currentUser.getUser().getUsername())) {
+            throw new SecurityException("You are not authorized to edit this recipe.");
+        }
+
+        // Update recipe fields
+        existingRecipe.setTitle(updatedRecipe.getTitle());
+        existingRecipe.setRecipeDescription(updatedRecipe.getRecipeDescription());
+        existingRecipe.setGuide(updatedRecipe.getGuide());
+        existingRecipe.setThumbnail_url(updatedRecipe.getThumbnail_url());
+
+        // Update recipe type
+        RecipeType recipeType = recipeTypeRepository.findByTypeName(updatedRecipe.getRecipeType());
+        if (recipeType == null) {
+            recipeType = new RecipeType(updatedRecipe.getRecipeType());
+            recipeTypeRepository.save(recipeType);
+        }
+        existingRecipe.setRecipeType(recipeType);
+
+        // Update ingredients
+        List<Ingredient> updatedIngredients = new ArrayList<>();
+        for (Ingredient ingredientDto : updatedRecipe.getIngredients()) {
+            Ingredient ingredient = ingredientRepository.findByIngredientName(ingredientDto.getIngredientName());
+            if (ingredient == null) {
+                ingredient = ingredientService.addIngredient(ingredientDto);
+            }
+            updatedIngredients.add(ingredient);
+        }
+        existingRecipe.setIngredients(updatedIngredients);
+
+        // Save the updated recipe
+        recipeRepository.save(existingRecipe);
+    }
+
 }

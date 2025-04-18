@@ -1,4 +1,5 @@
 export type Recipe = {
+    recipeId: number;
     title: string;
     recipeDescription: string;
     guide: string;
