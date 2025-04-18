@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.AppUser;
 import com.example.backend.model.LoginRequest;
 import com.example.backend.security.JWTGenerator;
+import com.example.backend.security.UserPrincipal;
 import com.example.backend.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -84,6 +87,19 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public @ResponseBody List<AppUser> getUsers(@RequestHeader("Authorization") String authHeader) {
         return userService.getAllUsers();
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/delete-account")
+    public ResponseEntity<String> deleteAccount(@RequestHeader("Authorization") String authHeader) {
+        try {
+            userService.deleteUser(authHeader);
+            return ResponseEntity.ok("Account deleted successfully.");
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete account.");
+        }
     }
 
     @CrossOrigin

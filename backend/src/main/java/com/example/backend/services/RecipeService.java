@@ -34,7 +34,6 @@ public class RecipeService {
         List<RecipeDto> recipesWithoutSomeInfo = new ArrayList<RecipeDto>();
 
         for (Recipe recipe : recipes) {
-            System.out.println(recipe.getRecipe_id());
             RecipeDto newRecipe = new RecipeDto(recipe.getRecipe_id(), recipe.getTitle(), recipe.getThumbnail_url(),
                     recipe.getRecipeDescription(),
                     recipe.getLikes(), recipe.getGuide(), recipe.getRecipeType().getTypeName(),

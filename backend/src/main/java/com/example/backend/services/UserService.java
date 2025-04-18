@@ -5,9 +5,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.model.AppUser;
 import com.example.backend.repositories.AppUserRepository;
+import com.example.backend.repositories.RecipeRepository;
 import com.example.backend.repositories.UserRoleRepository;
 import com.example.backend.security.JWTGenerator;
 
@@ -18,6 +20,9 @@ public class UserService {
 
     @Autowired
     private AppUserRepository userRepository;
+
+    @Autowired
+    private RecipeRepository recipeRepository;
 
     @Autowired
     private UserRoleRepository userRoleRepository;
@@ -65,8 +70,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+    @Transactional
+    public void deleteUser(String authHeader) {
+        AppUser user = getUserWithJWT(authHeader);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        recipeRepository.deleteByCreatorId(user.getUserId());
+        userRepository.deleteByUserId(user.getUserId());
     }
 
     public boolean authenticate(String username, String password) {

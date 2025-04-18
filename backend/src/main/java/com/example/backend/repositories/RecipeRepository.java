@@ -2,6 +2,7 @@ package com.example.backend.repositories;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +19,9 @@ public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 
     @Query("SELECT r FROM Recipe r WHERE LOWER(r.creator.username) LIKE LOWER(CONCAT('%', :creator, '%'))")
     public List<Recipe> searchRecipeByCreator(@Param(value = "creator") String creator);
+
+    @Modifying
+    @Query("DELETE FROM Recipe r WHERE r.creator.id = :creatorId")
+    void deleteByCreatorId(@Param("creatorId") Long creatorId);
 
 }
