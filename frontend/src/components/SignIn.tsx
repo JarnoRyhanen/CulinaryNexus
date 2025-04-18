@@ -48,7 +48,9 @@ const SignIn = () => {
       }
 
       const data = await response.json();
+      const currentTime = new Date().getTime();
       localStorage.setItem("token", data.token);
+      localStorage.setItem("loginTime", currentTime.toString()); 
       authContext?.login();
       navigate("/home");
     } catch (error) {

@@ -32,7 +32,9 @@ const Login = () => {
       }
 
       response.json().then((promise) => {
+        const currentTime = new Date().getTime();
         localStorage.setItem("token", promise.token);
+        localStorage.setItem("loginTime", currentTime.toString()); 
         authContext?.login();
         navigate("/home");
       });
