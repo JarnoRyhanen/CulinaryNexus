@@ -12,7 +12,7 @@ const SignIn = () => {
     email: "",
     password: ""
   });
-  
+
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
@@ -40,23 +40,22 @@ const SignIn = () => {
           email: user.email,
         }),
       });
-      console.log(response);
-      
 
-      response.json().then((promise) => {
-        console.log(promise);
-        
-        localStorage.setItem("token", promise.token)
-        authContext?.login();
-        navigate("/home");
-      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.error || "Failed to sign in. Please try again.");
+        return;
+      }
 
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      authContext?.login();
+      navigate("/home");
     } catch (error) {
       console.error("Signup failed: ", error);
-      setError(error as string);
-
+      setError("Something went wrong. Please try again later.");
     }
-  }
+  };
 
   return (
     <div className='relative'>

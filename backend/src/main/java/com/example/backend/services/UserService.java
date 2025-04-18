@@ -59,6 +59,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public boolean usernameExists(String username) {
+        return userRepository.findByUsername(username) != null;
+    }
+
     public String getHashedPassword(String password) {
         return (passwordEncoder.encode(password));
     }

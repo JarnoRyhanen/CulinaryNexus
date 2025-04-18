@@ -45,6 +45,12 @@ public class UserController {
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
+
+        if (userService.usernameExists(user.getUsername())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(Map.of("error", "Username already exists. Please choose a different username."));
+        }
+
         String token = jwtGenerator.generateToken(user.getUsername());
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
