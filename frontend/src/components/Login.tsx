@@ -1,23 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from './Button';
 import { useAuth } from './AuthContext';
 
 const Login = () => {
-
   const [user, setUser] = useState({
     username: "",
-    email: "",
     password: ""
   });
   const navigate = useNavigate();
-
+  const authContext = useAuth();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [event.target.name]: event.target.value })
-  }
-
-  const authContext = useAuth();
+    setUser({ ...user, [event.target.name]: event.target.value });
+  };
 
   const handleLogin = async () => {
     try {
@@ -37,11 +32,10 @@ const Login = () => {
       }
 
       response.json().then((promise) => {
-        localStorage.setItem("token", promise.token)
+        localStorage.setItem("token", promise.token);
         authContext?.login();
         navigate("/home");
-      })
-
+      });
     } catch (error) {
       console.error("Login failed:", error instanceof Error ? error.message : error);
       alert("Login failed. Please check your credentials and try again.");
@@ -49,35 +43,42 @@ const Login = () => {
   };
 
   return (
-    <div className='flex flex-col pb-1 md:pb-4 gap-4 justify-center items-center md:items-start md:w-full border-b-2 border-black'>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-orange-200 to-orange-100">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-[90%] max-w-md">
+        <h1 className="text-3xl font-bold text-orange-600 text-center mb-6">Welcome Back!</h1>
+        <p className="text-gray-600 text-center mb-8">Log in to access your account</p>
 
-      <input
-        type='text'
-        placeholder='Username'
-        name="username"
-        onChange={handleChange}
-        value={user.username}
-        className='relative mt-6 md:mt-16 font-medium font-sans text-black placeholder:text-black/50 bg-transparent/5 
-            border-2 text-xs md:text-2xl w-[10rem] md:w-[30rem] p-2 rounded'
-      />
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          onChange={handleChange}
+          value={user.username}
+          className="w-full p-3 mb-4 border bg-transparent border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
+        />
 
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          onChange={handleChange}
+          value={user.password}
+          className="w-full p-3 mb-6 border bg-transparent border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400"
+        />
 
-      <input
-        type='password'
-        placeholder='password'
-        name="password"
-        value={user.password}
-        onChange={handleChange}
-        className='relative mt-6 md:mt-16 font-medium font-sans text-black placeholder:text-black/50 bg-transparent/5 
-            border-2 text-xs md:text-2xl w-[10rem] md:w-[30rem] p-2 rounded'
-      />
+        <button
+          className="w-full bg-orange-500 text-white py-3 rounded-lg shadow-md hover:bg-orange-600 transition"
+          onClick={handleLogin}
+        >
+          Log In
+        </button>
 
-      <Button className="mt-3 md:mt-6" onClick={handleLogin}>
-        Log In!
-      </Button>
+        <p className="text-center text-gray-500 text-sm mt-6">
+          Don't have an account? <a href="/signup" className="text-orange-500 hover:underline">Sign up</a>
+        </p>
+      </div>
     </div>
-
-  )
-}
+  );
+};
 
 export default Login;
