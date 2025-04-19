@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend.model.AppUser;
 import com.example.backend.model.LoginRequest;
 import com.example.backend.security.JWTGenerator;
-import com.example.backend.security.UserPrincipal;
 import com.example.backend.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -123,9 +122,9 @@ public class UserController {
         if (newPassword == null || newPassword.isEmpty()) {
             throw new BadCredentialsException("The provided password is null or empty");
         }
-
+        
         currentUser.setPassword(newPassword);
-        userService.updateUser(currentUser);
+        userService.resetPassword(currentUser.getUsername(), newPassword);
 
         Map<String, String> response = new HashMap<>();
         response.put("New password", newPassword);

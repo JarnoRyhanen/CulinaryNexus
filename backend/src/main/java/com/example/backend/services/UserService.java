@@ -84,6 +84,18 @@ public class UserService {
         userRepository.deleteByUserId(user.getUserId());
     }
 
+    @Transactional
+    public void resetPassword(String username, String newPassword) {
+        AppUser user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        user.setPasswordHash(hashedPassword);
+        userRepository.save(user);
+    }
+
     public boolean authenticate(String username, String password) {
         AppUser user = userRepository.findByUsername(username);
 
@@ -118,4 +130,5 @@ public class UserService {
             throw new UsernameNotFoundException("Unauthorized access: Invalid or missing token");
         }
     }
+
 }
