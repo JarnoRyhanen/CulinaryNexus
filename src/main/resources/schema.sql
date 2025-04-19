@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS test;
-USE test;
+CREATE DATABASE IF NOT EXISTS CulinaryNexus;
+USE CulinaryNexus;
 
 /* 
 DROP TABLE IF EXISTS Recipe_ingredients;
