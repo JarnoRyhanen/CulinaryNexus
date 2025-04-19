@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping
@@ -91,6 +92,19 @@ public class RecipeController {
             recipeService.editRecipe(id, updatedRecipe);
             return ResponseEntity.ok("Recipe updated successfully.");
         } catch (IllegalArgumentException | SecurityException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/recipes/{recipeId}")
+    public ResponseEntity<String> deleteRecipe(@PathVariable Long recipeId) {
+        try {
+            recipeService.deleteRecipe(recipeId);
+            return ResponseEntity.ok("Recipe deleted successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
     }

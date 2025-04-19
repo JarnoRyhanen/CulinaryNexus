@@ -41,6 +41,26 @@ const MyRecipes = () => {
     navigate(`/create-recipes`, { state: { recipe } });
   };
 
+  const handleDeleteRecipe = (recipeId: number) => {
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      fetch(`http://localhost:8080/recipes/${recipeId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : "",
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          setRecipes(recipes.filter(recipe => recipe.recipeId !== recipeId));
+        })
+        .catch(error => console.error('Error deleting recipe:', error));
+    }
+  };
+
   return (
     <>
       <Header isFromHome={true} />
@@ -60,9 +80,15 @@ const MyRecipes = () => {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 
               overflow-y-auto custom-scrollbar max-h-[50rem]"
           > {recipes.map((recipe, index) => (
-            <>
-              <RecipeCard key={index} recipe={recipe} onClick={handleEditRecipe} />
-            </>
+            <div key={index} className="relative">
+              <RecipeCard recipe={recipe} onClick={handleEditRecipe} />
+              <button
+                className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-lg shadow-md hover:bg-red-600 transition"
+                onClick={() => handleDeleteRecipe(recipe.recipeId)}
+              >
+                Delete
+              </button>
+            </div>
           ))}
           </div>
         </div>

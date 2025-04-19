@@ -156,4 +156,10 @@ public class RecipeService {
         recipeRepository.save(existingRecipe);
     }
 
+    public void deleteRecipe(Long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+            .orElseThrow(() -> new IllegalArgumentException("Recipe not found with ID: " + recipeId));
+
+        recipeRepository.delete(recipe);
+    }
 }
