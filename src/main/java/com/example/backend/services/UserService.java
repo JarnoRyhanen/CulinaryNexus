@@ -52,6 +52,7 @@ public class UserService {
     public AppUser getUserByName(String username) {
         return userRepository.findByUsername(username);
     }
+
     
     public AppUser createUser(AppUser user) {
         user.setPasswordHash(passwordEncoder.encode(user.getPassword()));

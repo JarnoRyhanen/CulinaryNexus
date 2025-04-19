@@ -13,7 +13,7 @@ const HomeHero = () => {
                     <h3 className="text-orange-800 font-semibold text-center mt-4">Contribute to our collection!</h3>
                     <div className="flex flex-col items-center md:space-x-2 gap-3 m-3">
                         <span>Create your own recipes</span>
-                        <Button className="w-fit" href="/create-recipes">Here!</Button>
+                        <Button className="w-fit" href="#create-recipes">Here!</Button>
                     </div>
                 </div>
             </div>
