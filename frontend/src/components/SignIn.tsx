@@ -42,15 +42,28 @@ const SignIn = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = await response.json();
+        } catch {
+          errorData = { error: "Failed to sign in. Please try again." };
+        }
         setError(errorData.error || "Failed to sign in. Please try again.");
         return;
       }
 
-      const data = await response.json();
+      // Parse the success response
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        setError("Unexpected response from the server. Please try again later.");
+        return;
+      }
+
       const currentTime = new Date().getTime();
       localStorage.setItem("token", data.token);
-      localStorage.setItem("loginTime", currentTime.toString()); 
+      localStorage.setItem("loginTime", currentTime.toString());
       authContext?.login();
       navigate("/home");
     } catch (error) {

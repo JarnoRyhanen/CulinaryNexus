@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.model.AppUser;
+import com.example.backend.model.UserRole;
 import com.example.backend.repositories.AppUserRepository;
 import com.example.backend.repositories.RecipeRepository;
 import com.example.backend.repositories.UserRoleRepository;
@@ -55,10 +56,11 @@ public class UserService {
     public AppUser createUser(AppUser user) {
         user.setPasswordHash(passwordEncoder.encode(user.getPassword()));
         user.setPassword(user.getPassword());
-        user.setUserRole(userRoleRepository.findRoleByRoleId(1L));
+        UserRole role = userRoleRepository.findByRoleType("USER");
+        user.setUserRole(role);
         return userRepository.save(user);
     }
-
+    
     public boolean usernameExists(String username) {
         return userRepository.findByUsername(username) != null;
     }

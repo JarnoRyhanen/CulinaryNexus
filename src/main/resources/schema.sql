@@ -1,56 +1,53 @@
-CREATE DATABASE IF NOT EXISTS test;
-USE test;
+-- Remove "CREATE DATABASE" as PostgreSQL does not support it in this context
+-- CREATE DATABASE IF NOT EXISTS test;
 
-/* 
-DROP TABLE IF EXISTS Recipe_ingredients;
+-- Remove "USE test;" as PostgreSQL does not support it
+-- USE test;
+
+-- Drop tables if they exist
+/* DROP TABLE IF EXISTS Recipe_ingredients;
 DROP TABLE IF EXISTS Recipe;
 DROP TABLE IF EXISTS Ingredient;
 DROP TABLE IF EXISTS Recipe_type;
 DROP TABLE IF EXISTS App_user;
-DROP TABLE IF EXISTS User_role; 
- */
+DROP TABLE IF EXISTS User_role; */
 
-
+-- Create tables
 CREATE TABLE IF NOT EXISTS User_role (
-    role_id INT NOT NULL AUTO_INCREMENT,
-    role_type VARCHAR (5) NOT NULL,
-    PRIMARY KEY(role_id)
+    role_id SERIAL PRIMARY KEY,
+    role_type VARCHAR(5) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS App_user (
-    user_id INT NOT NULL AUTO_INCREMENT,
+    user_id SERIAL PRIMARY KEY,
     username VARCHAR(40) NOT NULL UNIQUE,
     user_email VARCHAR(50) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
     user_password_hash VARCHAR(255),
     user_role INT NOT NULL,
-    PRIMARY KEY (user_id),
     FOREIGN KEY (user_role) REFERENCES User_role(role_id)
 );
 
 CREATE TABLE IF NOT EXISTS Recipe_type (
-    type_id INT NOT NULL AUTO_INCREMENT,
-    type_name VARCHAR(20) NOT NULL,
-    PRIMARY KEY (type_id)
+    type_id SERIAL PRIMARY KEY,
+    type_name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Ingredient (
-    ingredient_id INT NOT NULL AUTO_INCREMENT,
+    ingredient_id SERIAL PRIMARY KEY,
     ingredient_name VARCHAR(100) NOT NULL,
-    unit VARCHAR(15),
-    PRIMARY KEY (ingredient_id)
+    unit VARCHAR(15)
 );
 
 CREATE TABLE IF NOT EXISTS Recipe (
-    recipe_id INT NOT NULL AUTO_INCREMENT,
+    recipe_id SERIAL PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
-    thumbnail_url LONGTEXT,
+    thumbnail_url TEXT,
     recipe_description TEXT NOT NULL,
     likes INT DEFAULT 0,
     guide TEXT NOT NULL,
     recipe_type INT NOT NULL,
     creator INT NOT NULL,
-    PRIMARY KEY (recipe_id),
     FOREIGN KEY (recipe_type) REFERENCES Recipe_type(type_id),
     FOREIGN KEY (creator) REFERENCES App_user(user_id)
 );
