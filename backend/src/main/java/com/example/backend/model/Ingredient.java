@@ -19,7 +19,7 @@ public class Ingredient {
     @Column(name = "ingredient_id", nullable = false, updatable = false)
     private Long ingredientId;
 
-    @Column(name = "ingredient_name", nullable = false, length = 20)
+    @Column(name = "ingredient_name", nullable = false, length = 100)
     private String ingredientName;
 
     @Column(name = "unit", nullable = true)

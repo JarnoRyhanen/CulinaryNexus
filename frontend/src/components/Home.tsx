@@ -47,7 +47,7 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        if (selectedRecipe) {
+        if (isMobile && selectedRecipe) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = '';

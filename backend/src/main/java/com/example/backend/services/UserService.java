@@ -51,11 +51,11 @@ public class UserService {
     public AppUser getUserByName(String username) {
         return userRepository.findByUsername(username);
     }
-
+    
     public AppUser createUser(AppUser user) {
         user.setPasswordHash(passwordEncoder.encode(user.getPassword()));
         user.setPassword(user.getPassword());
-        user.setUserRole(userRoleRepository.findRoleByRoleId(3L));
+        user.setUserRole(userRoleRepository.findRoleByRoleId(1L));
         return userRepository.save(user);
     }
 

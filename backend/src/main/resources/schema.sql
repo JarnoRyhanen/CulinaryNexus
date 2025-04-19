@@ -1,13 +1,14 @@
-
 CREATE DATABASE IF NOT EXISTS test;
 USE test;
 
---DROP TABLE IF EXISTS Recipe_ingredients;
---DROP TABLE IF EXISTS Recipe;
---DROP TABLE IF EXISTS Ingredient;
---DROP TABLE IF EXISTS Recipe_type;
---DROP TABLE IF EXISTS App_user;
---DROP TABLE IF EXISTS User_role;
+/* 
+DROP TABLE IF EXISTS Recipe_ingredients;
+DROP TABLE IF EXISTS Recipe;
+DROP TABLE IF EXISTS Ingredient;
+DROP TABLE IF EXISTS Recipe_type;
+DROP TABLE IF EXISTS App_user;
+DROP TABLE IF EXISTS User_role; 
+ */
 
 
 CREATE TABLE IF NOT EXISTS User_role (
@@ -35,7 +36,7 @@ CREATE TABLE IF NOT EXISTS Recipe_type (
 
 CREATE TABLE IF NOT EXISTS Ingredient (
     ingredient_id INT NOT NULL AUTO_INCREMENT,
-    ingredient_name VARCHAR(20) NOT NULL,
+    ingredient_name VARCHAR(100) NOT NULL,
     unit VARCHAR(15),
     PRIMARY KEY (ingredient_id)
 );
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS Ingredient (
 CREATE TABLE IF NOT EXISTS Recipe (
     recipe_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
-    thumbnail_url TEXT,
+    thumbnail_url LONGTEXT,
     recipe_description TEXT NOT NULL,
     likes INT DEFAULT 0,
     guide TEXT NOT NULL,

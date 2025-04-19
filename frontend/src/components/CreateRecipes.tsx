@@ -118,13 +118,12 @@ const CreateRecipes = () => {
                         onChange={handleChange}
                         className={classes}
                     />
-                    <input
-                        type='text'
+                    <textarea
                         placeholder='Description'
                         value={recipe.recipeDescription}
                         onChange={handleChange}
                         name="recipeDescription"
-                        className={classes} />
+                        className={`${classes} text-base font-normal`}/>
 
                     <input
                         type='file'
@@ -161,7 +160,7 @@ const CreateRecipes = () => {
                         name="recipeType"
                         className={classes} />
 
-                    <div className='flex flex-col justify-start items-start p-2 md:w-3/5 border-2 border-slate-500/70 rounded-xl'>
+                    <div className='flex flex-col justify-start items-start p-2 w-4/5 md:w-3/5 border-2 border-slate-500/70 rounded-xl'>
                         <div className='flex justify-between w-full items-center'>
                             <h3 className='font-medium text-xl '>Ingredients </h3>
                             <button
@@ -183,7 +182,7 @@ const CreateRecipes = () => {
                                     onChange={(e) =>
                                         handleIngredientChange(index, 'name', e.target.value)
                                     }
-                                    className="flex-1 my-2 p-2 bg-transparent text-xl border rounded-lg shadow-md"
+                                    className="flex-1 my-2 p-2 bg-transparent w-4/5 text-base lg:text-lg border rounded-lg shadow-md"
                                 />
                             </div>
                         ))}
