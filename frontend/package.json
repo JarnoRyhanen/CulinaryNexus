@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://JarnoRyhanen.github.io/CulinaryNexus/",
+  "homepage": "https://jarnoryhanen.github.io/CulinaryNexus/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
