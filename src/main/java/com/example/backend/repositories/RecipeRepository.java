@@ -24,4 +24,7 @@ public interface RecipeRepository extends CrudRepository<Recipe, Long> {
     @Query("DELETE FROM Recipe r WHERE r.creator.id = :creatorId")
     void deleteByCreatorId(@Param("creatorId") Long creatorId);
 
+    @Query(value = "SELECT r.* FROM recipe r JOIN users u ON r.creator_id = u.id WHERE LOWER(u.username) = LOWER(:username)", nativeQuery = true)
+    List<Recipe> findByCreatorUsernameNative(@Param("username") String username);
+
 }

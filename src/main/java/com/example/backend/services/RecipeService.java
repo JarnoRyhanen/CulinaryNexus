@@ -89,6 +89,15 @@ public class RecipeService {
         return dtoRecipes;
     }
 
+    public List<RecipeDto> getMyRecipes() {
+        UserPrincipal currentUser = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = currentUser.getUser().getUsername();
+
+        List<Recipe> recipes = recipeRepository.findByCreatorUsernameNative(username);
+        return castToDtos(recipes);
+    }
+
     public List<RecipeDto> getRecipesByName(String title) {
         List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByTitle(title);
         return castToDtos(recipes);
@@ -103,15 +112,6 @@ public class RecipeService {
     public List<RecipeDto> getRecipesByCreator(String creatorName) {
 
         List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByCreator(creatorName);
-        return castToDtos(recipes);
-    }
-
-    public List<RecipeDto> getMyRecipes() {
-        UserPrincipal currentUser = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        String username = currentUser.getUser().getUsername();
-
-        List<Recipe> recipes = recipeRepository.searchRecipeByCreator(username);
         return castToDtos(recipes);
     }
 
@@ -158,7 +158,7 @@ public class RecipeService {
 
     public void deleteRecipe(Long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-            .orElseThrow(() -> new IllegalArgumentException("Recipe not found with ID: " + recipeId));
+                .orElseThrow(() -> new IllegalArgumentException("Recipe not found with ID: " + recipeId));
 
         recipeRepository.delete(recipe);
     }

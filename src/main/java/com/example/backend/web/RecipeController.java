@@ -37,6 +37,14 @@ public class RecipeController {
         return recipeService.getRecipes();
     }
 
+
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
+    @RequestMapping(value = "/recipes/myrecipes", method = RequestMethod.GET)
+    public @ResponseBody List<RecipeDto> searchMyRecipes() {
+        return recipeService.getMyRecipes();
+    }
+
+
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/{recipeName}")
     public @ResponseBody List<RecipeDto> searchRecipeByName(@PathVariable String recipeName) {
@@ -55,11 +63,6 @@ public class RecipeController {
         return recipeService.getRecipesByCreator(creatorName);
     }
 
-    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
-    @GetMapping("/recipes/myrecipes")
-    public @ResponseBody List<RecipeDto> searchMyRecipes() {
-        return recipeService.getMyRecipes();
-    }
 
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @PostMapping("/newRecipe")
@@ -99,5 +102,4 @@ public class RecipeController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
     }
-
 }
