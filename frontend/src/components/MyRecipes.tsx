@@ -25,9 +25,6 @@ const MyRecipes = () => {
         })
       .then(response => {
         console.log(response);
-        console.log(response.json());
-        
-        
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -48,7 +45,7 @@ const MyRecipes = () => {
 
   const handleDeleteRecipe = (recipeId: number) => {
     if (window.confirm("Are you sure you want to delete this recipe?")) {
-      fetch(`https://culinary-nexus-web-app-culinarynexus.2.rahtiapp.fi/${recipeId}`, {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/${recipeId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': token ? `Bearer ${token}` : "",
