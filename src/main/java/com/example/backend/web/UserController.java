@@ -37,7 +37,7 @@ public class UserController {
     @Autowired
     private JWTGenerator jwtGenerator;
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = {"http://localhost:5173", "https://culinarynexus.onrender.com"})
     @PostMapping("/signin")
     public ResponseEntity<Map<String, String>> createUser(@RequestBody AppUser user) {
         if (user.getPassword() == null || user.getPassword().isEmpty()) {

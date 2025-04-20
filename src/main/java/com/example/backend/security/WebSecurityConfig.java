@@ -48,13 +48,16 @@ public class WebSecurityConfig {
         @Bean
         CorsConfigurationSource CorsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(List.of("http://localhost:5173", "https://culinarynexus.onrender.com"));
-                configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-                configuration.setAllowCredentials(true);
-                configuration.addAllowedHeader(("*"));
+                configuration.setAllowedOrigins(List.of(
+                        "http://localhost:5173", // Local development
+                        "https://culinarynexus.onrender.com" // Render frontend
+                ));
+                configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Include OPTIONS for preflight requests
+                configuration.setAllowCredentials(true); // Allow cookies or authorization headers
+                configuration.addAllowedHeader("*"); // Allow all headers
 
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration(("/**"), configuration);
+                source.registerCorsConfiguration("/**", configuration); // Apply CORS to all endpoints
                 return source;
         }
 
@@ -66,8 +69,8 @@ public class WebSecurityConfig {
         @Bean
         public SecurityFilterChain configure(HttpSecurity http) throws Exception {
                 http
-                                .csrf(AbstractHttpConfigurer::disable)
-                                .cors(Customizer.withDefaults())
+                                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for APIs
+                                .cors(Customizer.withDefaults()) // Enable CORS with the above configuration
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
                                                 .authenticationEntryPoint(jAuthEntryPoint)) // Handle unauthorized access
                                 .sessionManagement(sessionManagement -> sessionManagement
