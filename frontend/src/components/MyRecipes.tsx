@@ -16,7 +16,7 @@ const MyRecipes = () => {
 
   const fetchData = () => {
     console.log('Authorization Header:', token ? `Bearer ${token}` : "");
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/myrecipes`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/recipes/myrecipes`, {
       headers: {
         'Authorization': token ? `Bearer ${token}` : "",
         'Accept': 'application/json',

@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.backend.dto.RecipeDto;
+import com.example.backend.model.AppUser;
 import com.example.backend.model.Ingredient;
 import com.example.backend.model.Recipe;
 import com.example.backend.model.RecipeType;
@@ -29,6 +30,9 @@ public class RecipeService {
 
     @Autowired
     private IngredientService ingredientService;
+
+    @Autowired
+    private UserService userService;
 
     private List<RecipeDto> castToDtos(List<Recipe> recipes) {
         List<RecipeDto> recipesWithoutSomeInfo = new ArrayList<RecipeDto>();
@@ -89,12 +93,29 @@ public class RecipeService {
         return dtoRecipes;
     }
 
-    public List<RecipeDto> getMyRecipes() {
-        UserPrincipal currentUser = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
-        String username = currentUser.getUser().getUsername();
+    public List<RecipeDto> getMyRecipes(String authHeader) {
+        // Check if the Authorization header is null or empty
+        if (authHeader == null || authHeader.isEmpty()) {
+            throw new IllegalArgumentException("Authorization header is required");
+        }
 
+        // Get the user from the JWT token
+        AppUser user = userService.getUserWithJWT(authHeader);
+        if (user == null) {
+            throw new SecurityException("Invalid or expired token");
+        }
+
+        String username = user.getUsername();
+        if (username == null || username.isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty");
+        }
+
+        // Fetch recipes for the user
         List<Recipe> recipes = recipeRepository.findByCreatorUsernameNative(username);
+        if (recipes.isEmpty()) {
+            throw new IllegalArgumentException("No recipes found for the user: " + username);
+        }
+
         return castToDtos(recipes);
     }
 

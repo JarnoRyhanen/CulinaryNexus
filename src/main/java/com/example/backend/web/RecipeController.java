@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
-@CrossOrigin(origins = "https://culinarynexus.onrender.com")
 @RequestMapping
+@CrossOrigin(origins = { "http://localhost:5173", "https://culinarynexus.onrender.com" })
 public class RecipeController {
 
     @Autowired
@@ -37,13 +38,12 @@ public class RecipeController {
         return recipeService.getRecipes();
     }
 
-
-    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
-    @RequestMapping(value = "/myrecipes", method = RequestMethod.GET)
-    public @ResponseBody List<RecipeDto> searchMyRecipes() {
-        return recipeService.getMyRecipes();
+    @CrossOrigin(origins = { "http://localhost:5173", "https://culinarynexus.onrender.com" })
+    @GetMapping("/recipes/myrecipes")
+    public @ResponseBody List<RecipeDto> searchMyRecipes(@RequestHeader("Authorization") String authHeader) {
+        System.out.println("Authorization Header: " + authHeader);
+        return recipeService.getMyRecipes(authHeader);
     }
-
 
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/{recipeName}")
@@ -62,7 +62,6 @@ public class RecipeController {
     public @ResponseBody List<RecipeDto> searchRecipeByCreator(@PathVariable String creatorName) {
         return recipeService.getRecipesByCreator(creatorName);
     }
-
 
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @PostMapping("/newRecipe")
