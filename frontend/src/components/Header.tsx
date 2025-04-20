@@ -72,15 +72,15 @@ const Header = ({ isFromHome }: HeaderTypes) => {
 
                 {!isFromHome ? (
                     <>
-                        <a href='#signup' className='button hidden mr-8 text-black/1050 transition-colors hover:text-gray-500 lg:block'>
+                        <a href='/signup' className='button hidden mr-8 text-black/1050 transition-colors hover:text-gray-500 lg:block'>
                             New Account
                         </a>
-                        <Button className="hidden lg:flex" href="#login">
+                        <Button className="hidden lg:flex" href="/login">
                             Sign in
                         </Button>
                     </>
                 ) : (
-                    <Button className="hidden lg:flex" href="#profile">
+                    <Button className="hidden lg:flex" href="/profile">
                         Profile
                     </Button>
                 )}
