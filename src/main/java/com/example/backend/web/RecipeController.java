@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.dto.RecipeDto;
-import com.example.backend.model.Ingredient;
-import com.example.backend.repositories.IngredientRepository;
 import com.example.backend.services.RecipeService;
 
 import java.util.HashMap;
@@ -26,52 +24,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:5173", "https://culinarynexus.onrender.com"})
+@CrossOrigin(origins = "https://culinarynexus.onrender.com")
 @RequestMapping
 public class RecipeController {
-    @Autowired
-    private IngredientRepository ingredientRepository;
 
     @Autowired
     private RecipeService recipeService;
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @RequestMapping(value = "/recipes", method = RequestMethod.GET)
     public @ResponseBody List<RecipeDto> getRecipes() {
         return recipeService.getRecipes();
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/ingredients", method = RequestMethod.GET)
-    public @ResponseBody List<Ingredient> getIngredients() {
-        return (List<Ingredient>) ingredientRepository.findAll();
-    }
-
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/{recipeName}")
     public @ResponseBody List<RecipeDto> searchRecipeByName(@PathVariable String recipeName) {
         return recipeService.getRecipesByName(recipeName);
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/types/{typeName}")
     public @ResponseBody List<RecipeDto> searchRecipeByType(@PathVariable String typeName) {
         return recipeService.getRecipesByType(typeName);
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/creators/{creatorName}")
     public @ResponseBody List<RecipeDto> searchRecipeByCreator(@PathVariable String creatorName) {
         return recipeService.getRecipesByCreator(creatorName);
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/myrecipes")
     public @ResponseBody List<RecipeDto> searchMyRecipes() {
         return recipeService.getMyRecipes();
     }
 
-    @CrossOrigin(origins = {"http://localhost:5173", "https://culinarynexus.onrender.com"})
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @PostMapping("/newRecipe")
     public ResponseEntity<Map<String, String>> addNewRecipe(@RequestBody RecipeDto recipe) {
         Map<String, String> response = new HashMap<>();
@@ -85,7 +75,7 @@ public class RecipeController {
         return ResponseEntity.ok(response);
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @PutMapping("/recipes/editRecipe")
     public ResponseEntity<String> editRecipe(@RequestBody RecipeDto updatedRecipe) {
         try {
@@ -97,7 +87,7 @@ public class RecipeController {
         }
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @DeleteMapping("/recipes/{recipeId}")
     public ResponseEntity<String> deleteRecipe(@PathVariable Long recipeId) {
         try {

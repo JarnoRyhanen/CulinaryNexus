@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping
+@CrossOrigin(origins = {"http://localhost:5173", "https://culinarynexus.onrender.com"})
 public class UserController {
 
     @Autowired
@@ -57,7 +58,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> loginAppUser(@RequestBody LoginRequest loginRequest,
             HttpSession session) {
@@ -79,7 +80,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @RequestMapping(value = "/current-user")
     public ResponseEntity<AppUser> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
 
@@ -87,13 +88,13 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public @ResponseBody List<AppUser> getUsers(@RequestHeader("Authorization") String authHeader) {
         return userService.getAllUsers();
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @DeleteMapping("/delete-account")
     public ResponseEntity<String> deleteAccount(@RequestHeader("Authorization") String authHeader) {
         try {
@@ -106,7 +107,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @PutMapping("/reset-password")
     public ResponseEntity<Map<String, String>> resetPassword(@RequestHeader("Authorization") String authHeader,
             @RequestBody AppUser user) {
