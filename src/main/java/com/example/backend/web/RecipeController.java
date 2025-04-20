@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:5173", "https://culinarynexus.onrender.com"})
 @RequestMapping
 public class RecipeController {
     @Autowired
@@ -70,7 +71,7 @@ public class RecipeController {
         return recipeService.getMyRecipes();
     }
 
-    @CrossOrigin
+    @CrossOrigin(origins = {"http://localhost:5173", "https://culinarynexus.onrender.com"})
     @PostMapping("/newRecipe")
     public ResponseEntity<Map<String, String>> addNewRecipe(@RequestBody RecipeDto recipe) {
         Map<String, String> response = new HashMap<>();
