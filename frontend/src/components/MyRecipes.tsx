@@ -48,7 +48,7 @@ const MyRecipes = () => {
 
   const handleDeleteRecipe = (recipeId: number) => {
     if (window.confirm("Are you sure you want to delete this recipe?")) {
-      fetch(`http://localhost:8080/recipes/${recipeId}`, {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/${recipeId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': token ? `Bearer ${token}` : "",
