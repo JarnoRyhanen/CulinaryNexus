@@ -76,7 +76,7 @@ const Login = () => {
         </button>
 
         <p className="text-center text-gray-500 text-sm mt-6">
-          Don't have an account? <a href="/signup" className="text-orange-500 hover:underline">Sign up</a>
+          Don't have an account? <a href="#signup" className="text-orange-500 hover:underline">Sign up</a>
         </p>
       </div>
     </div>
