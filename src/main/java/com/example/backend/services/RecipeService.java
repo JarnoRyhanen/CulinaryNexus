@@ -111,7 +111,7 @@ public class RecipeService {
         }
 
         // Fetch recipes for the user
-        List<Recipe> recipes = recipeRepository.findByCreatorUsernameNative(username);
+        List<Recipe> recipes = recipeRepository.searchRecipeByCreator(username);
         if (recipes.isEmpty()) {
             throw new IllegalArgumentException("No recipes found for the user: " + username);
         }

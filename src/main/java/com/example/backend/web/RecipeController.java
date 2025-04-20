@@ -42,9 +42,10 @@ public class RecipeController {
     @GetMapping("/recipes/myrecipes")
     public @ResponseBody List<RecipeDto> searchMyRecipes(@RequestHeader("Authorization") String authHeader) {
         System.out.println("Authorization Header: " + authHeader);
+        
         return recipeService.getMyRecipes(authHeader);
     }
-    
+
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/{recipeName}")
     public @ResponseBody List<RecipeDto> searchRecipeByName(@PathVariable String recipeName) {
