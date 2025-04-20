@@ -76,7 +76,8 @@ public class WebSecurityConfig {
                                 .sessionManagement(sessionManagement -> sessionManagement
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless session
                                 .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers("/signin", "/login").permitAll() // Allow public access to these endpoints
+                                                .requestMatchers("/signin", "/login").permitAll() 
+                                                .requestMatchers("/recipes/**").authenticated() // Protected endpoints
                                                 .anyRequest().authenticated()) // Require authentication for all other endpoints
                                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class); // Add JWT filter
 
