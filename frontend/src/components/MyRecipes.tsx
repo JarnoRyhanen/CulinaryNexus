@@ -16,7 +16,7 @@ const MyRecipes = () => {
 
   const fetchData = () => {
     console.log('Authorization Header:', token ? `Bearer ${token}` : "");
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/recipes/myrecipes`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/myrecipes`, {
       headers: {
         'Authorization': token ? `Bearer ${token}` : "",
         'Accept': 'application/json',
@@ -48,7 +48,7 @@ const MyRecipes = () => {
 
   const handleDeleteRecipe = (recipeId: number) => {
     if (window.confirm("Are you sure you want to delete this recipe?")) {
-      fetch(`${import.meta.env.VITE_BACKEND_URL}/${recipeId}`, {
+      fetch(`https://culinary-nexus-web-app-culinarynexus.2.rahtiapp.fi/${recipeId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': token ? `Bearer ${token}` : "",

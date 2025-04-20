@@ -39,7 +39,7 @@ public class RecipeController {
 
 
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
-    @RequestMapping(value = "/recipes/myrecipes", method = RequestMethod.GET)
+    @RequestMapping(value = "/myrecipes", method = RequestMethod.GET)
     public @ResponseBody List<RecipeDto> searchMyRecipes() {
         return recipeService.getMyRecipes();
     }
