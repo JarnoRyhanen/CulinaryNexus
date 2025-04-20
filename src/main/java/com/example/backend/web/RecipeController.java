@@ -3,6 +3,7 @@ package com.example.backend.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -32,12 +33,14 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
+    @Transactional
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @RequestMapping(value = "/recipes", method = RequestMethod.GET)
     public @ResponseBody List<RecipeDto> getRecipes() {
         return recipeService.getRecipes();
     }
 
+    @Transactional
     @CrossOrigin(origins = { "http://localhost:5173", "https://culinarynexus.onrender.com" })
     @GetMapping("/recipes/myrecipes")
     public @ResponseBody List<RecipeDto> searchMyRecipes(@RequestHeader("Authorization") String authHeader) {
@@ -46,18 +49,21 @@ public class RecipeController {
         return recipeService.getMyRecipes(authHeader);
     }
 
+    @Transactional
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/{recipeName}")
     public @ResponseBody List<RecipeDto> searchRecipeByName(@PathVariable String recipeName) {
         return recipeService.getRecipesByName(recipeName);
     }
 
+    @Transactional
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/types/{typeName}")
     public @ResponseBody List<RecipeDto> searchRecipeByType(@PathVariable String typeName) {
         return recipeService.getRecipesByType(typeName);
     }
 
+    @Transactional
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @GetMapping("/recipes/creators/{creatorName}")
     public @ResponseBody List<RecipeDto> searchRecipeByCreator(@PathVariable String creatorName) {
@@ -78,6 +84,7 @@ public class RecipeController {
         return ResponseEntity.ok(response);
     }
 
+    @Transactional
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @PutMapping("/recipes/editRecipe")
     public ResponseEntity<String> editRecipe(@RequestBody RecipeDto updatedRecipe) {
@@ -90,6 +97,7 @@ public class RecipeController {
         }
     }
 
+    @Transactional
     @CrossOrigin(origins = "https://culinarynexus.onrender.com")
     @DeleteMapping("/recipes/{recipeId}")
     public ResponseEntity<String> deleteRecipe(@PathVariable Long recipeId) {

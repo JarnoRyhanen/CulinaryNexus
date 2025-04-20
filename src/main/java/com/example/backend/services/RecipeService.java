@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.dto.RecipeDto;
 import com.example.backend.model.AppUser;
@@ -93,6 +94,7 @@ public class RecipeService {
         return dtoRecipes;
     }
 
+    @Transactional
     public List<RecipeDto> getMyRecipes(String authHeader) {
         // Check if the Authorization header is null or empty
         if (authHeader == null || authHeader.isEmpty()) {
@@ -119,19 +121,20 @@ public class RecipeService {
         return castToDtos(recipes);
     }
 
+    @Transactional
     public List<RecipeDto> getRecipesByName(String title) {
         List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByTitle(title);
         return castToDtos(recipes);
     }
 
+    @Transactional
     public List<RecipeDto> getRecipesByType(String type) {
-
         List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByRecipeType(type);
         return castToDtos(recipes);
     }
 
+    @Transactional
     public List<RecipeDto> getRecipesByCreator(String creatorName) {
-
         List<Recipe> recipes = (List<Recipe>) recipeRepository.searchRecipeByCreator(creatorName);
         return castToDtos(recipes);
     }
@@ -177,6 +180,7 @@ public class RecipeService {
         recipeRepository.save(existingRecipe);
     }
 
+    @Transactional
     public void deleteRecipe(Long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found with ID: " + recipeId));

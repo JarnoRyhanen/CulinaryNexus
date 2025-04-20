@@ -11,6 +11,7 @@ import com.example.backend.model.Recipe;
 
 public interface RecipeRepository extends CrudRepository<Recipe, Long> {
 
+    
     @Query("SELECT r FROM Recipe r WHERE LOWER(r.title) LIKE LOWER(CONCAT('%', :title, '%'))")
     public List<Recipe> searchRecipeByTitle(@Param(value = "title") String title);
 
