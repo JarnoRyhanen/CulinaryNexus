@@ -19,7 +19,7 @@ const Profile = () => {
 
 
     const fetchData = () => {
-        fetch("http://localhost:8080/current-user", {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/current-user`, {
             headers: {
                 'Authorization': token ? `Bearer ${token}` : "",
                 'Accept': 'application/json',

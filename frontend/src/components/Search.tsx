@@ -23,7 +23,7 @@ const Search = ({ onSearchResults }: { onSearchResults: (data: Recipe[]) => void
 
     const fetchData = () => {
 
-        const baseEndpoint = 'http://localhost:8080/recipes';
+        const baseEndpoint = `${import.meta.env.VITE_BACKEND_URL}/recipes`;
         let endPoint = baseEndpoint;
 
         switch (queryOption) {

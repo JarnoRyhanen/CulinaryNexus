@@ -14,7 +14,7 @@ const Home = () => {
     const token = localStorage.getItem("token");
 
     const fetchData = () => {
-        fetch('http://localhost:8080/recipes', {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/recipes`, {
             headers: {
                 'Authorization': token ? `Bearer ${token}` : "",
                 'Accept': 'application/json',

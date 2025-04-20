@@ -15,7 +15,7 @@ const MyRecipes = () => {
   }, []);
 
   const fetchData = () => {
-    fetch('http://localhost:8080/recipes/myrecipes', {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/recipes/myrecipes`, {
       headers: {
         'Authorization': token ? `Bearer ${token}` : "",
         'Accept': 'application/json',

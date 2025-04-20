@@ -65,8 +65,11 @@ const CreateRecipes = () => {
 
     const addEditRecipe = () => {
         event?.preventDefault();
-        const endpoint = recipeToEdit ? `http://localhost:8080/recipes/editRecipe` : "http://localhost:8080/newRecipe";
-        const method = recipeToEdit ? "PUT" : "POST";
+        const endpoint = recipeToEdit
+            ? `${import.meta.env.VITE_BACKEND_URL}/recipes/editRecipe`
+            : `${import.meta.env.VITE_BACKEND_URL}/newRecipe`;
+        
+            const method = recipeToEdit ? "PUT" : "POST";
         fetch(endpoint, {
             method: method,
             headers: {
@@ -123,7 +126,7 @@ const CreateRecipes = () => {
                         value={recipe.recipeDescription}
                         onChange={handleChange}
                         name="recipeDescription"
-                        className={`${classes} text-base font-normal`}/>
+                        className={`${classes} text-base font-normal`} />
 
                     <input
                         type='file'

@@ -12,7 +12,7 @@ const PasswordChange = ({ token, password, onCancel }: PasswordChangeProps) => {
     const [newPassword, setNewPassWord] = useState("");
 
     const handlePasswordReset = () => {
-        fetch("http://localhost:8080/reset-password", {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/reset-password`, {
             method: "PUT",
             headers: {
                 'Authorization': token ? `Bearer ${token}` : "",
