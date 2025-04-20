@@ -14,7 +14,6 @@ import Profile from './components/Profile.tsx';
 import CreateRecipes from './components/CreateRecipes.tsx';
 import MyRecipes from './components/MyRecipes.tsx';
 
-console.log('VITE_BASENAME:', import.meta.env.VITE_BASENAME);
 
 const router = createHashRouter(
   [
@@ -70,9 +69,6 @@ const router = createHashRouter(
       ],
     },
   ],
-  {
-    basename: "/",
-  },
 );
 
 createRoot(document.getElementById('root')!).render(
