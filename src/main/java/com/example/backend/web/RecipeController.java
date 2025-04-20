@@ -38,7 +38,7 @@ public class RecipeController {
         return recipeService.getRecipes();
     }
 
-    @CrossOrigin(origins = { "http://localhost:5173", "https://culinarynexus.onrender.com" })
+    @CrossOrigin(origins = { "http://localhost:5173", "https://culinarynexus.onrender.com/myrecipes" })
     @GetMapping("/recipes/myrecipes")
     public @ResponseBody List<RecipeDto> searchMyRecipes(@RequestHeader("Authorization") String authHeader) {
         System.out.println("Authorization Header: " + authHeader);
