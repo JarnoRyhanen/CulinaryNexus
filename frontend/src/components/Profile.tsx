@@ -58,7 +58,7 @@ const Profile = () => {
         event.preventDefault();
         const confirmDelete = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
         if (confirmDelete) {
-            fetch("http://localhost:8080/delete-account", {
+            fetch("https://culinary-nexus-web-app-culinarynexus.2.rahtiapp.fi/delete-account", {
                 method: "DELETE",
                 headers: {
                     'Authorization': token ? `Bearer ${token}` : "",
